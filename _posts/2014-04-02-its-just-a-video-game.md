@@ -1,5 +1,5 @@
 ---
-title: It's Just A Vidoe Game
+title: It's Just A Video Game
 ---
 So many things in life are way more difficult than they should be. Writing code ranks up there most days. It's a grind at times, and most of it has lost it's appeal. It's just not as much fun as it once was. Let me relate this to something we all might get...
 
