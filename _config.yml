@@ -5,6 +5,11 @@ repo: "https://github.com/kellyjandrews/kellyjandrews.github.io/"
 branch: "tree/gh-pages/"
 quiet:    true
 
+github: "https://github.com/kellyjandrews"
+twitter: "https://twitter.com/kellyjandrews"
+linkedin: "https://www.linkedin.com/in/kjandrews/en"
+stackexchange: "https://stackexchange.com/users/2222625/kelly-j-andrews"
+
 # Where things are
 source:      .
 destination: ./_site
@@ -24,3 +29,11 @@ excerpt_separator: "<!-- more -->"
 exclude: ["less","gulp","node_modules","Gulpfile.js","package.json","scripts"]
 include: ["_pages"]
 encoding: "utf-8"
+
+defaults:
+  -
+    scope:
+      path: "" # empty string for all files
+      type: "posts"
+    values:
+      layout: "post"

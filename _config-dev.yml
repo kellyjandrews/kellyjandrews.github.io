@@ -4,6 +4,7 @@ baseurl: ""
 repo: "https://github.com/kellyjandrews/kellyjandrews.github.io/"
 branch: "tree/gh-pages/"
 quiet:    true
+
 github: "https://github.com/kellyjandrews"
 twitter: "https://twitter.com/kellyjandrews"
 linkedin: "https://www.linkedin.com/in/kjandrews/en"
