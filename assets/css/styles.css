@@ -8005,6 +8005,26 @@ a:hover {
   background-repeat: no-repeat;
   position: relative;
   color: #f0f0f0;
+  height: 500px;
+}
+#homeHero #noblur {
+  background: url(../images/background_dk_no_blur.png) no-repeat bottom right;
+  opacity: 0;
+  height: 500px;
+  position: absolute;
+  display: block;
+  width: 100%;
+  right: 0;
+  bottom: 0;
+  z-index: 99;
+  -webkit-transition: opacity 0.3s ease-out;
+  -moz-transition: opacity 0.3s ease-out;
+  -ms-transition: opacity 0.3s ease-out;
+  -o-transition: opacity 0.3s ease-out;
+  transition: opacity 0.3s ease-out;
+}
+#homeHero:hover #noblur {
+  opacity: 1;
 }
 #homeHero #heroText {
   z-index: 100;
