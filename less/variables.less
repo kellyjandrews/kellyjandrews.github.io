@@ -1,0 +1,35 @@
+/*variables.less*/
+@brand-ltGray: #cecece;
+@brand-dkGray: #5d5e5e;
+@brand-color: #5d9cd4;
+@text-color: #4a4a4a;
+@link-color: @brand-color;
+
+/*Typography*/
+@font-family-sans-serif: 'Roboto', Helvetica, Arial, sans-serif;
+@headings-font-family: "Roboto", Helvetica, Arial, sans-serif;
+
+
+body {margin-top:70px;}
+
+h1 {font-weight:100;letter-spacing:-2px;}
+
+p, .highlight {padding-bottom:25px;}
+
+.paddedLR {padding:0 80px;}
+.paddedTB {padding:80px 0;}
+.padded{padding:80px;}
+
+a:hover { text-decoration: none;}
+
+.overlay {
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    background-color:rgba(0, 0, 0, 0.75);
+    background: url(data:;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAABl0RVh0U29mdHdhcmUAUGFpbnQuTkVUIHYzLjUuNUmK/OAAAAATSURBVBhXY2RgYNgHxGAAYuwDAA78AjwwRoQYAAAAAElFTkSuQmCC) repeat scroll transparent; /* ie fallback png background image */
+    z-index:99;
+    color:white;
+}

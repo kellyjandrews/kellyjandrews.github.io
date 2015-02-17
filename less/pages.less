@@ -1,0 +1,25 @@
+.articles article.post {
+  // margin: 0px;
+  padding:30px;
+  position: relative;
+  & header {
+    min-height: 150px;
+    & h1 {
+      padding: 0;
+      margin: 0;
+    }
+  }
+  & section{
+    padding:30px;
+    color: @brand-dkGray;
+    position: absolute;
+    z-index: 100;
+    top: 0;
+    left: 0;
+  }
+}
+
+.blurry-text {
+   color: transparent;
+   text-shadow: 0 0 10px @brand-color;
+}
