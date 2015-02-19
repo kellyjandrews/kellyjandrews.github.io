@@ -1,5 +1,5 @@
 ---
-title: Connections - Developers and Marketing
+title: Developers and Marketing
 ---
 I've had the privilege of attending my sixth Connections this past week as an employee of ExactTarget, now Salesforce.  When I first started, the content was exclusively about digital marketing - best practices, tips and tricks, better design standards, etc. This year, we changed all that.
 

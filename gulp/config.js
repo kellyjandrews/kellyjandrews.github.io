@@ -22,6 +22,9 @@ var config = {
 		src: src + 'scripts/scripts.js',
 		dest: dest + '/js'
 	},
+	templates: {
+		src: src + "templates/*.hbs"
+	},
 	fonts: {
 		src: [src + 'node_modules/font-awesome/fonts/**/*.{ttf,woff,eof,svg}'],
 		dest: dest + "/fonts"

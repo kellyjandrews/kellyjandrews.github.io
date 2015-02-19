@@ -1,3 +1,3 @@
 var gulp = require('gulp');
 
-gulp.task('dev', ['browserify', 'fonts', 'less', 'build', 'watch'], function () {});
+gulp.task('default', ['fonts', 'less', 'watch'], function () {});
