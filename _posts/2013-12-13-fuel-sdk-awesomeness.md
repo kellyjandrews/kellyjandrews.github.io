@@ -1,5 +1,6 @@
 ---
 title: Fuel SDK Awesomeness
+comments: true
 ---
 ####The 800-lb Gorilla
 Building on top of ExactTarget has long since been something developers would have great difficulty with.  SOAP APIs are something not everyone jumps up and down for, with great excitement.

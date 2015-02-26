@@ -1,5 +1,6 @@
 ---
 title: How Are Your Docs?
+comments: true
 ---
 
 There will always be a time when you start a project and you have to begin understanding the platform you are working with. It's that critical moment when you start to decide which tools you need, if you haven't already.

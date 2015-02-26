@@ -1,5 +1,6 @@
 ---
 title: API Testing with SOAP UI
+comments: true
 ---
 Quite often at exacttarget, I find myself required to do some API work.  I'll be the first to admit that staring at a SOAP enevelope for longer than a few seconds turns my brain to mush.
 

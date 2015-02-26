@@ -1,5 +1,6 @@
 ---
 title: Improving My Workflow
+comments: true
 ---
 Sometimes I wonder how I have missed things.  Bash sripting and the `.bash_(whatever)` files are one of those that I have heard about and never played with... whoops - my bad.  For those of you who are using it and using it effectively, you will probably nod your head when I say - I should have done this years ago.
 

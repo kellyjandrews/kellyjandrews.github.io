@@ -1,5 +1,6 @@
 ---
 title: Building A Community
+comments: true
 ---
 As a developer advocate, I get the priveledge of meeting developers doing all kinds of projects. They don't work in the same ways, or use the same languages. It's great to see what people are doing and how they blaze their own trails.
 

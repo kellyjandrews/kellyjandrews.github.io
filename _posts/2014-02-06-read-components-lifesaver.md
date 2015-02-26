@@ -1,5 +1,6 @@
 ---
 title: Read-Component = Lifesaver
+comments: true
 ---
 I recently wrote a [post](http://kellyjandrews.com/using-bower/) about utilizing [Bower](http://bower.io/) in your projects.  It has seriously saved me from copy/pasting files numerous times, and I hope you are starting to use it in your projects as well. If not - start - like now.
 

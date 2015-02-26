@@ -1,5 +1,6 @@
 ---
 title: Lightning Components and Browserify
+comments: true
 ---
 
 ###Lightning Components

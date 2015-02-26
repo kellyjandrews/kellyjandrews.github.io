@@ -1,5 +1,6 @@
 ---
 title: Using Fuel oAuth with the SOAP API
+comments: true
 ---
 Security is a major concern for people these days.  With so many business having a breach of some kind, everyone get's up tight around security concerns. And rightfully so - I'm not a fan of changing passwords all the time because a company left my private data hanging out.
 

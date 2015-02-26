@@ -1,5 +1,6 @@
 ---
 title: Using Bower
+comments: true
 ---
 I first started developing back when `jquery` was still a figment in John Resig's imagination. The only `js` files that were included were those to perform minor tasks, and some dynamic html.  The front end world, was simpler.
 

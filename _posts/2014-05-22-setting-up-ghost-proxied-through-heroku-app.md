@@ -1,5 +1,6 @@
 ---
 title: Ghost Proxied Through Heroku App
+comments: true
 ---
 
 Over the last couple of days, I have been pounding my head against the wall of what is known as a proxy. I wanted to capture everything I did to make it work, and hope it helps someone down the road attempting the same thing.
