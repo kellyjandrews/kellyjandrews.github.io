@@ -158,6 +158,6 @@ I took the liberty of building out the rest on my own to give it more of a final
 ##Source Code and Next Steps
 This is by all means not a perfect mock-up. There are a few items I'm just not happy with yet, but I'll continue to tweak in future posts, as we dive into each component directly.
 
-I've created a [GitHub repo](https://github.com/kellyjandrews/react-tutorial) with the source code, and I'll be adding to it as I create more tutorials.  You can clone what I have so far in your desktop, and run it in your browser.  
+I've created a [GitHub repo](https://github.com/kellyjandrews/react-tutorial/tree/static-mockup) with the source code, and I'll be adding to it as I create more tutorials.  You can clone what I have so far in your desktop, and run it in your browser.  
 
 The next steps will be to set up a workflow to begin separating files, building out the data flow, making things more interactive, and eventually making this use live data and dropping it into a real application.
