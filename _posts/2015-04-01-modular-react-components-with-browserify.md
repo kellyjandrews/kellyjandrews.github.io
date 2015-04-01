@@ -188,6 +188,18 @@ import DataTable from './datatable';
 import Pagination from './pagination';
 {% endhighlight %}
 
+####Bootstrap and jQuery are Missing
+
+Even with all of this, Bootstrap and jQuery don't just automatically work. The best solution I currently have for this is to add the following just below the lines above in `app.jsx`.
+
+{% highlight js %}
+import jQuery from 'jquery';
+global.jQuery = jQuery;
+import bootstrap from 'bootstrap';
+{% endhighlight %}
+
+This feel terribly wrong to me - but I know it works.  I hate using the global variable, and eventually I will land on the right combination to resolve this, and get it sorted. For now. This is what I have.
+
 Rerun `gulp app` and we are back where we started. This may seem like a lot of work - but in the long run, it pays off.
 
 ##Auto Reload
