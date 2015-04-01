@@ -161,3 +161,7 @@ This is by all means not a perfect mock-up. There are a few items I'm just not h
 I've created a [GitHub repo](https://github.com/kellyjandrews/react-tutorial/tree/static-mockup) with the source code, and I'll be adding to it as I create more tutorials.  You can clone what I have so far in your desktop, and run it in your browser.  
 
 The next steps will be to set up a workflow to begin separating files, building out the data flow, making things more interactive, and eventually making this use live data and dropping it into a real application.
+
+####Data Grid Tutorials
+1. React - Up and Running
+2. [Modular React Components With Browserify](http://www.kellyjandrews.com/2015/04/01/modular-react-components-with-browserify.html)
