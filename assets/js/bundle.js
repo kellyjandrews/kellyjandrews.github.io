@@ -15314,7 +15314,7 @@ var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
     var helper, alias1=helpers.helperMissing, alias2="function", alias3=this.escapeExpression;
 
-  return "<h2>demographics</h2>\n<p><b>Address</b><br>\n"
+  return "<h2>demographics</h2>\n<h5>address</h5>\n<p>"
     + alias3(((helper = (helper = helpers.address || (depth0 != null ? depth0.address : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"address","hash":{},"data":data}) : helper)))
     + "<br>\n"
     + alias3(((helper = (helper = helpers.city || (depth0 != null ? depth0.city : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"city","hash":{},"data":data}) : helper)))
@@ -15322,13 +15322,13 @@ module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"
     + alias3(((helper = (helper = helpers.state || (depth0 != null ? depth0.state : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"state","hash":{},"data":data}) : helper)))
     + " "
     + alias3(((helper = (helper = helpers.zipCode || (depth0 != null ? depth0.zipCode : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"zipCode","hash":{},"data":data}) : helper)))
-    + "</p>\n<p><b>Email</b><br>\n<a href=\"mailto:"
+    + "</p>\n<h5>email</h5>\n<p><a href=\"mailto:"
     + alias3(((helper = (helper = helpers.email || (depth0 != null ? depth0.email : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"email","hash":{},"data":data}) : helper)))
     + "\">"
     + alias3(((helper = (helper = helpers.email || (depth0 != null ? depth0.email : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"email","hash":{},"data":data}) : helper)))
-    + "</a></p>\n<p><b>Phone Number</b><br>\n"
+    + "</a></p>\n<h5>Phone Number</h5>\n<p>"
     + alias3((helpers.formatPhone || (depth0 && depth0.formatPhone) || alias1).call(depth0,(depth0 != null ? depth0.phone : depth0),{"name":"formatPhone","hash":{},"data":data}))
-    + "\n</p>\n";
+    + "</p>\n";
 },"useData":true});
 
 },{"hbsfy/runtime":22}],26:[function(require,module,exports){
@@ -15337,17 +15337,17 @@ var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
     var helper, alias1=helpers.helperMissing, alias2="function", alias3=this.escapeExpression;
 
-  return "<h2>education</h2>\n"
+  return "<h2>education</h2>\n<h5>school</h5>\n<p>"
     + alias3(((helper = (helper = helpers.school || (depth0 != null ? depth0.school : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"school","hash":{},"data":data}) : helper)))
-    + "\n"
+    + "</p>\n<h5>degree</h5>\n<p>"
     + alias3(((helper = (helper = helpers.degree || (depth0 != null ? depth0.degree : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"degree","hash":{},"data":data}) : helper)))
-    + "\n"
+    + "</p>\n<h5>major</h5>\n<p>"
     + alias3(((helper = (helper = helpers.major || (depth0 != null ? depth0.major : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"major","hash":{},"data":data}) : helper)))
-    + "\n"
+    + "</p>\n<h5>minor</h5>\n<p>"
     + alias3(((helper = (helper = helpers.minor || (depth0 != null ? depth0.minor : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"minor","hash":{},"data":data}) : helper)))
-    + "\n"
+    + "</p>\n<h5>graduation date</h5>\n<p>"
     + alias3((helpers.formatDate || (depth0 && depth0.formatDate) || alias1).call(depth0,(depth0 != null ? depth0.graduationDate : depth0),"MM-DD-YYYY",{"name":"formatDate","hash":{},"data":data}))
-    + "\n";
+    + "</p>\n";
 },"useData":true});
 
 },{"hbsfy/runtime":22}],27:[function(require,module,exports){
