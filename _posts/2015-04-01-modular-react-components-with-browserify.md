@@ -249,4 +249,3 @@ I've update my [GitHub repo](https://github.com/kellyjandrews/react-tutorial/tre
 1. [React - Up and Running]({{site.baseurl}}/2015/03/30/react-up-and-running.html)
 2. [Modular React Components With Browserify]({{site.baseurl}}/2015/04/01/modular-react-components-with-browserify.html)
 3. [Data Driven React Components]({{site.baseurl}}/2015/04/08/data-driven-react-components.html)
-4. [React Component Communication]({{site.baseurl}}/2015/04/09/react-component-communication.html)
