@@ -34,7 +34,8 @@ var config = {
 		layouts: src + '/_layouts/**/*.*',
 		pages: src + '/_pages/**/*.*',
 		posts: src + '/_posts/**/*.*',
-		data: src + '/_data/**/*.*'
+		data: src + '/_data/**/*.*',
+		drafts: src + '/_drafts/**/*.*'
 	}
 };
 
