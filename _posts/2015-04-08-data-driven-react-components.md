@@ -1,6 +1,7 @@
 ---
 title: Data Driven React Components
 comments: true
+series: React Data Grid Tutorials
 ---
 
 ##Making This Thing Useful
@@ -108,8 +109,3 @@ Also, in the repo you will see that I added some additional styles to fix the he
 This is just the start of the data grid being interactive. Now that we have live data, the next steps will include working with the pagination to update the data grid so that it will react to page changes and keep the data up-to-date accordingly.
 
 I've update my [GitHub repo](https://github.com/kellyjandrews/react-tutorial/tree/modular-build) with the source code from this tutorial.
-
-####Data Grid Tutorials
-1. [React - Up and Running]({{site.baseurl}}/2015/03/30/react-up-and-running.html)
-2. [Modular React Components With Browserify]({{site.baseurl}}/2015/04/01/modular-react-components-with-browserify.html)
-3. [Data Driven React Components]({{site.baseurl}}/2015/04/08/data-driven-react-components.html)

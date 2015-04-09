@@ -37,6 +37,7 @@ defaults:
       type: "posts"
     values:
       layout: "post"
+  -
     scope:
       path: "" # empty string for all files
       type: "drafts"
