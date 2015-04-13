@@ -16,6 +16,7 @@ destination: ./_site
 plugins:     ./_plugins
 posts:       ./_posts
 pages:       ./_pages
+drafts:      ./drafts
 layouts:     ./_layouts
 data_source: ./_data
 collections: null
