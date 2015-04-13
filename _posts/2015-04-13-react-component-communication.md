@@ -305,6 +305,8 @@ handlePagination(setting) {
 
 `handlePagination()` does just a few simple steps.  I use `nextState` here to manually build out the changes and pass to the other helper functions.  The most important part here is checking for `displayCount` changes.  Since changing how many items display will change the current `page`, I want to be sure to handle that properly. I took the approach of keeping the user as close to the original data set they were previously viewing, so I'm changing the page they are on based on the `itemStart` property. Not sure if I like it, but it works for now.
 
+Finally, I update the final items in `state` and then using `setState()` method update the component. All of the `DataGrid` ownees then get updated with the new data automatically.
+
 ##Defaults
 When you initialize the `DataGrid`, you can actually pass in additional `props`. `DataGrid` relies on `displayCount`, `displayCountOptions` array, `page`, and `data`. This will allow the owner of `DataGrid` to pass in specific details to render, say the user leaves the containing page and comes back - you might store where they left off and return them to the exact spot.
 
