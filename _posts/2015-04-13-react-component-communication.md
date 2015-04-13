@@ -265,10 +265,11 @@ paginateData(start, end) {
 
 These three functions are just static - they run when called, do not set state, and return a result. Basically, helper functions to reduce redundancy. React component does have the `static` object, which allows your component to have callable methods, allowing them to be ran prior to creating a component instance, but they don't have access to `state` or `props`.  This isn't exactly what I was after, so they remain instance methods, and left it at that. If I needed them to be accessible outside this specific instance, then that change could be made.
 
-These methods are really simple in function.  
-+ `getStartEnd()` provides a way to ensure the start and end item number match up the current data set displayed.
-+ `getPageOptions()` creates the array for the `DropDownMenu` component, since the number of pages changes when you change the display count.
-+ `paginateData()` returns my data set sliced by the page.
+These methods are really simple in function.
+ 
+*  `getStartEnd()` provides a way to ensure the start and end item number match up the current data set displayed.
+*  `getPageOptions()` creates the array for the `DropDownMenu` component, since the number of pages changes when you change the display count.
+*  `paginateData()` returns my data set sliced by the page.
 
 ###Handling The Pagination Changes
 All that's left to do it handle the pagination. `handlePagination()` runs when the `Pagination` component fires `this.props.onChange`.
