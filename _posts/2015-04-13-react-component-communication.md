@@ -191,7 +191,7 @@ Since we created `Pagination` to operate with very little functionality - `DataG
 
 Let's walk through this before moving on. The `Pagination` render method is looking for several items, and those all are passed as props.  `DataGrid` will manage everything in `state` that is allowed to change. Notice two items are not `state` properties?  `displayCountOptions` in reality should never change - I've set mine to 10 and 25. I can't think of a good reason for the UI to change those options in the drop down, so I just left them as `props`. Also, I introduce the `onChange()` property that takes a function, and eventually is called by `updateSettings()` in the `Pagination` component. Now it all starts to come together.
 
-###Constructing Data Grid
+###Constructing DataGrid
 When I build the initial `DataGrid` there are a few steps I want to perform right away.
 
 {% highlight js %}
