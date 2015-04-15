@@ -232,7 +232,7 @@ In ES6, we need to bind all class functions to `this` - `this.handlePagination =
 
 You might be wondering why I have `this.props.data` and `this.state.data`. The reason for this is I want `this.props.data` to be immutable. When we page the data, we aren't actually changing the data, just returning a subset of data to the `DataTable` component - in my case either 10 or 25 rows at a time.
 
-##Class Helper Functions
+##Static Functions
 There are three functions in our `DataGrid` component that simply return some result:
 
 {% highlight js %}
@@ -263,7 +263,7 @@ paginateData(start, end) {
 ...
 {% endhighlight %}
 
-These three functions are just class helpers - they run when called, do not set state, and return a result. Basically, helper functions to reduce redundancy. We could create `static` methods, which makes those functions externally available, allowing them to run prior to creating a component instance, and they don't have access to `state` or `props`.  This really isn't what we need here, so they remain class helper methods.
+These three functions are just static - they run when called, do not set state, and return a result. Basically, helper functions to reduce redundancy. React component does have the `static` object, which allows your component to have callable methods, allowing them to be ran prior to creating a component instance, but they don't have access to `state` or `props`.  This isn't exactly what I was after, so they remain instance methods, and left it at that. If I needed them to be accessible outside this specific instance, then that change could be made.
 
 These methods are really simple in function.
 
