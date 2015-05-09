@@ -1,7 +1,6 @@
 # site configuration
 title: "Kelly J Andrews"
-baseurl: "http://www.kellyjandrews.com/"
-url: "http://www.kellyjandrews.com"
+baseurl: "http://www.kellyjandrews.com"
 repo: "https://github.com/kellyjandrews/kellyjandrews.github.io/"
 branch: "tree/gh-pages/"
 quiet:    true
