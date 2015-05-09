@@ -1,6 +1,7 @@
 # site configuration
 title: "Kelly J Andrews"
 baseurl: ""
+url: "http://localhost:4000"
 repo: "https://github.com/kellyjandrews/kellyjandrews.github.io/"
 branch: "tree/gh-pages/"
 quiet:    true
