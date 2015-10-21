@@ -11,7 +11,7 @@ The next logical step is to break our files up, and then introduce a simple buil
 
 
 ##Getting The Requirements
-Since we are adding some requirements to the build process, the first step is to get `npm` going. If you need to [install npm and node](https://docs.npmjs.com/getting-started/installing-node), do that now. If you prefer [IO](https://iojs.org/en/index.html), I've not done much there yet, but it's compatible with NPM.
+Since we are adding some requirements to the build process, the first step is to get `npm` going. If you need to [install npm and node](https://docs.npmjs.com/getting-started/installing-node), do that now.
 
 {% highlight bash%}
 npm init
