@@ -28,11 +28,10 @@ collections: null
 markdown:    kramdown
 highlighter: rouge
 excerpt_separator: "<!-- more -->"
-permalink: date
 
 # Handling Reading
 exclude: ["less","gulp","node_modules","Gulpfile.js","package.json","scripts"]
-include: ["_pages"]
+include: ["_pages","_posts"]
 encoding: "utf-8"
 
 defaults:
