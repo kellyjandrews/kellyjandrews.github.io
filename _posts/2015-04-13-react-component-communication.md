@@ -4,13 +4,13 @@ comments: true
 series: React Data Grid Tutorials
 ---
 
-##The Real Work Starts
+## The Real Work Starts
 So far in the series, we have mocked up the `DataGrid` component, set up our application workflow with [Gulp](http://gulpjs.com/) and [Babel](https://babeljs.io/), and updated our `DataTable` component to use some example data. At this point, `DataGrid` is still a fairly static component.  So let's look at how to make the `Pagination` and `DataTable` work together and communicate through the `DataGrid`.
 
-##Caution
+## Caution
 This tutorial is not for the faint hearted.  I will do my best to explain everything that is going on and break it down into simple chunks. It's also using pure React and JavaScript when possible. There are libraries that can help with some of the data flow challenges that are faced doing this kind of component, however, with any framework, understanding how it works at it's lowest level is highly beneficial when you begin abstracting layers with additional libraries.
 
-##Owner/Ownee and Data
+## Owner/Ownee and Data
 React specifically makes the distinction between owner/ownee and parent/child relationships. A component is an owner, and any sub components are ownees. This is differs from parent/child, where a tag wraps inner tags. I will use this as the terminology henceforth.  Forgive me if I used these interchangeably in the past.
 
 With this in mind, we then can make decisions about which component owns what data. Looking at the `DataGrid` component, there are a few data points to keep track of:
@@ -22,7 +22,7 @@ With this in mind, we then can make decisions about which component owns what da
 
 The goal is to manage these data points in the top-level, and then pass them down through the components.  Let's start with an initial change, that will get the data flow moving first.
 
-##Initial Changes
+## Initial Changes
 The first step is to get the data to the top level from the two dropdowns for display count and current page. Since we are building components, it made sense to add a new component named `DropDownMenu` and render it in the `Pagination` component.
 
 {% highlight js %}
@@ -87,7 +87,7 @@ For now, modify how these are called in `Pagination`:
 
 I'm actually going to pass `props` later for the value and options, but for now this can be static. If you run the app now, you will get an error since we haven't passed in `onChange()` from the owner component. Let's do that now.
 
-##Pagination
+## Pagination
 Remember how I said that our goal is to manage data at the top level? `DropDownMenu` currently provides a path for `Pagination` to learn of the changes, but if we stick to the goal of top down data flow, `Pagination` also needs a way to communicate with it's owner, `DataGrid`.
 
 Much like `DropDownMenu`, `Pagination` doesn't need to do much more than report changes to `DataGrid`. Data will flow from the top down, and `Pagination` will update based on new data.
@@ -174,7 +174,7 @@ ES6 slightly changes the way `state` is created - directly in the `constructor()
 
 That's it - this is all we need the `Pagination` component to do. What we have so far, is a component that passes data back to it's owner when it's changed (twice actually), and it maintains it's own state for buttons.
 
-##Driving With The Top Down
+## Driving With The Top Down
 Since we created `Pagination` to operate with very little functionality - `DataGrid` needs to pass down the right `props` to keep things accurate. `Pagination` needs several data points from `DataGrid`:
 {% highlight html %}
 <Pagination
@@ -191,7 +191,7 @@ Since we created `Pagination` to operate with very little functionality - `DataG
 
 Let's walk through this before moving on. The `Pagination` render method is looking for several items, and those all are passed as props.  `DataGrid` will manage everything in `state` that is allowed to change. Notice two items are not `state` properties?  `displayCountOptions` in reality should never change - I've set mine to 10 and 25. I can't think of a good reason for the UI to change those options in the drop down, so I just left them as `props`. Also, I introduce the `onChange()` property that takes a function, and eventually is called by `updateSettings()` in the `Pagination` component. Now it all starts to come together.
 
-###Constructing DataGrid
+### Constructing DataGrid
 When I build the initial `DataGrid` there are a few steps I want to perform right away.
 
 {% highlight js %}
@@ -232,7 +232,7 @@ In ES6, we need to bind all class functions to `this` - `this.handlePagination =
 
 You might be wondering why I have `this.props.data` and `this.state.data`. The reason for this is I want `this.props.data` to be immutable. When we page the data, we aren't actually changing the data, just returning a subset of data to the `DataTable` component - in my case either 10 or 25 rows at a time.
 
-##Class Helper Functions
+## Class Helper Functions
 There are three functions in our `DataGrid` component that simply return some result:
 
 {% highlight js %}
@@ -271,7 +271,7 @@ These methods are really simple in function.
 * `getPageOptions()` creates the array for the `DropDownMenu` component, since the number of pages changes when you change the display count.
 * `paginateData()` returns my data set sliced by the page.
 
-###Handling The Pagination Changes
+### Handling The Pagination Changes
 All that's left to do it handle the pagination. `handlePagination()` runs when the `Pagination` component fires `this.props.onChange`.
 
 {% highlight js %}
@@ -308,7 +308,7 @@ handlePagination(setting) {
 
 Finally, I update the final items in `state` and then using `setState()` method update the component. All of the `DataGrid` ownees then get updated with the new data automatically.
 
-##Defaults
+## Defaults
 When you initialize the `DataGrid`, you can actually pass in additional `props`. `DataGrid` relies on `displayCount`, `displayCountOptions` array, `page`, and `data`. This will allow the owner of `DataGrid` to pass in specific details to render, say the user leaves the containing page and comes back - you might store where they left off and return them to the exact spot.
 
 However, these aren't required, and I handle that using `defaultProps` on the component class.
@@ -322,7 +322,7 @@ DataGrid.defaultProps = {
 
 Now, our `DataGrid` only requires `data` to be passed in, and everything else has a default.
 
-##Wrap Up
+## Wrap Up
 Phew! This took me a bit to get here. To be honest, I started with a much larger code set and did some rework, and I'm happy with where it's ended up. The process helped me really digest how top down data should be approached, and separating concerns as much as possible. There were a lot of change to get here, but in reality - it's very simple.  When the `DropDownMenu` changes, the `DataGrid` is alerted and send the data back through. It updates the UI super quick, and feels very natural.
 
 There is still some additional functionality I'd like to introduce, but so far this is very operational. Next steps are adding the search function to reduce the number of total results.

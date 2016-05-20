@@ -41,5 +41,5 @@ So I installed it as an `npm` module, ran the install, and then removed my hack.
 
 I restarted Brunch, and like magic - it all returned.
 
-####Moral of the story
+#### Moral of the story
 Don't give up - there is always something out there addressing your issue.  Just have to find it.

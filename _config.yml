@@ -12,15 +12,16 @@ linkedin: "https://www.linkedin.com/in/kjandrews/en"
 stackexchange: "https://stackexchange.com/users/2222625/kelly-j-andrews"
 gems:
   - jekyll-sitemap
-  
+
 # Where things are
 source:      .
 destination: ./_site
-plugins:     ./_plugins
+plugins_dir: ./_plugins
 posts:       ./_posts
 pages:       ./_pages
-layouts:     ./_layouts
-data_source: ./_data
+drafts:      ./drafts
+layouts_dir: ./_layouts
+data_dir:    ./_data
 collections: null
 
 # Conversion

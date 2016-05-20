@@ -4,7 +4,7 @@ comments: true
 series: React Data Grid Tutorials
 ---
 
-##Fashionably Late
+## Fashionably Late
 I always seem late to the party. I was late getting into Node.js, and then Ember & Angular. I played with ruby well after it was the hot topic, and I went straight to Gulp after only a short time with Grunt. And per the usual, just a couple weeks ago I started trying [React](https://facebook.github.io/react/). This party is just getting warmed up.
 
 Learning frameworks for me has always been difficult.  I tend to lean towards the anti-framework models of straight PHP, or Rails-less ruby.  However, trying React, something clicked. I mean, I actually get what it's trying to do, and the understanding happened quickly.
@@ -32,12 +32,12 @@ Using the [getting started](https://facebook.github.io/react/docs/getting-starte
 
 Open `index.html` in a browser, and it's already working.
 
-##99 Data Problems
+## 99 Data Problems
 Rendering html in this way is super simple, and doesn't really get into the power of React. Then I started working with data, and that's where I started to really see things make sense.  Granted, it took a second to understand the one-directional data flow, but it was literally only a second. You just have to learn to [think in react](http://facebook.github.io/react/docs/thinking-in-react.html).
 
 In order to not only better understand what's going on myself, but to also help other developers getting started, I'm going to write a few blog posts to dive into React piece by piece, and at the end, end up with a finished product that would be useful.
 
-##The Plan
+## The Plan
 Let's build a data grid.  The concept isn't anything unusual, and it's useful in any UI project you might work on.  I'll break down components bit by bit, and at the end, we will have a finished, reusable component.  We'll laugh, cry, and learn together a bit more about React, and it's inner workings.  
 
 The first step is, I want to think about how the finished product will work. For that, I turn to [Balsamiq](https://balsamiq.com/) to create a quick mockup that details exactly what I want.
@@ -51,19 +51,19 @@ There are three components that will be working together here:
 
 It's a straight forward example, but I think it has enough going on to make it really useful.
 
-##Initial Mockup
+## Initial Mockup
 The first place to start is a static mockup.  I'm actually going to mock this up using components, so we can begin to think about how the pieces fit together. We will build several pieces that will ultimately be data driven - and we will use some build tools to make everything a bit easier to work with. For now - I will keep this in one file, `index.html`.
 
-###Capitalization Counts!
+### Capitalization Counts!
 When building out our mockup, we will be creating a few components.  It is important to note some syntax that is vital to getting these to work.
 
 Each class needs to be a capitalized.  In other words, `<DataGrid />` is what we are looking for. `<dataGrid />` will not work properly.
 
 
-###The Components
+### The Components
 We will get to really splitting these components apart in a later tutorial, but first - there are three main components, and I will stub out those items so we can get the everything moving.
 
-####Data Grid
+#### Data Grid
 First, let's make a component that houses everything together, and call it `DataGrid`.  
 
 {% highlight js %}
@@ -97,7 +97,7 @@ React.render(
 
 Now, let's make the `DataGrid` hold other components inside.
 
-####Title Bar, Data Table, Pagination
+#### Title Bar, Data Table, Pagination
 
 I'm going to start out really simple here, and just render some text.  We can go back build out markup later.
 
@@ -151,12 +151,12 @@ var DataGrid = React.createClass({
 
 Now our text from each component is rendered where the `<ComponentName />` is listed, and as before, wrapped in a container `<div>`.  
 
-###Making it look real
+### Making it look real
 I like using [Bootstrap](http://getbootstrap.com/), so I ended up using it here as well. There is a [React-Bootstrap](http://react-bootstrap.github.io/) library as well, and I may find a spot to use it. For now, I'll keep it simple. One item that has to be mentioned - [html properties](https://facebook.github.io/react/docs/tags-and-attributes.html) are not 1:1 transfers in React.  Most notably - `class` is actually `className`. This is important during the process of adding Bootstrap.  If your page doesn't render, open the console, and React does a great job of indicating where `class` should be `className`.
 
 I took the liberty of building out the rest on my own to give it more of a final look and feel. Since this isn't really about designing with Bootstrap, I won't cover all of those steps here.
 
-##Source Code and Next Steps
+## Source Code and Next Steps
 This is by all means not a perfect mock-up. There are a few items I'm just not happy with yet, but I'll continue to tweak in future posts, as we dive into each component directly.
 
 I've created a [GitHub repo](https://github.com/kellyjandrews/react-tutorial/tree/static-mockup) with the source code, and I'll be adding to it as I create more tutorials.  You can clone what I have so far in your desktop, and run it in your browser.  

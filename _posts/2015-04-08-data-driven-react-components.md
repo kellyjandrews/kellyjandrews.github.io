@@ -4,15 +4,15 @@ comments: true
 series: React Data Grid Tutorials
 ---
 
-##Making This Thing Useful
+## Making This Thing Useful
 If you have been following along with my data grid tutorial - we don't really have much going on yet. So far I've only mocked up a representation of what the final data grid will look like. This is not entirely useful. The next step is to use real data.
 
-##React Data Flow
+## React Data Flow
 In order to think about how this works together, we need to approach this in the React way of doing things. In the `app.jsx` file, this is where our main data grid component lives - and it's a composite component made up of other, smaller components.
 
 It's important to understand how React uses it's data - from the owner to the ownee. It seperates concerns into the individual components, and makes your applications easier to understand what's going on. If none of this makes sense - keep going, and it should clear things up.
 
-###Starting Point
+### Starting Point
 First things first - we need some data.  The data set is overly contrived, but it will help prove out the concept. I've added a `data.js` file to my root directory:
 
 {% highlight js %}
@@ -105,7 +105,7 @@ Now the data table renders out with the data passed to it. This is still very st
 Also, in the repo you will see that I added some additional styles to fix the header to the top. This feels more like a data grid should, as opposed to a table where the header scrolls as well.
 
 
-##Wrap Up
+## Wrap Up
 This is just the start of the data grid being interactive. Now that we have live data, the next steps will include working with the pagination to update the data grid so that it will react to page changes and keep the data up-to-date accordingly.
 
 I've update my [GitHub repo](https://github.com/kellyjandrews/react-tutorial/tree/modular-build) with the source code from this tutorial.

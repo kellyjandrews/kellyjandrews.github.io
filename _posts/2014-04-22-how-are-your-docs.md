@@ -24,21 +24,21 @@ Often times, just the simple organizational aspect of where these items are can 
 
 If you want me to use your product, make it as easy as possible to get going, or I'm out.
 
-###Some Suggestions
+### Some Suggestions
 
-####Show me something, now.
+#### Show me something, now.
 If I click on something, it needs to show exactly what I want to see at that given time.  If I want to learn your REST API, I want to see what it has to offer and how I can use it. Take a look at the [Twitter API](https://dev.twitter.com/docs/api/1.1). I immediately get a page that shows every potential route, and how it should be used.  From there, I can click in and immediately get something to test with. It does give me some description regarding meta data and usage info, but it's related specifically to the route and how it is intended to be used.
 
-####Make it useful.
+#### Make it useful.
 If I am on your page, I want to immediately get something of value - in the real world. [Handlebarsjs](http://handlebarsjs.com/) frustrates me a bit in this regard.  The sample code is mostly ok, but when you start to do real templating, most of the examples don't hold up in my opinion. Once you get going, everything makes more sense, but when you first start learning it, it's an uphill battle that can easily be overcome with better samples.
 
-####Don't just generate crap
+#### Don't just generate crap
 I'm looking at you [JavaDocs](http://docs.oracle.com/javase/1.5.0/docs/api/index.html), [Rdocs](http://rdoc.sourceforge.net/), [YUIdocs](https://yuilibrary.com/yui/docs/api/classes/Anim.html), [phpDocumentor](http://phpdoc.org/) and the host of other source code based documentation generators. Just stop. If you have to learn how to write specific comments to generate documentation, you are already going down the wrong path.
 
-####Write some guides!
+#### Write some guides!
 Reference is great, and typically is where I spend my time once I understand your concepts. But at some point in my journey with your library, I have to understand some core concepts.  [Emberjs](http://www.emberjs.com) does an amazing job of breaking down some fairly complex concepts Barney style. Well done.
 
 <img src="http://stream1.gifsoup.com/view3/3151954/barney-o.gif" style="margin:0 auto;display:block;">
 
-####Go Old School
+#### Go Old School
 I will eventually write more about some solid tools to generate better documentation, but here is a quick preview - pen and paper.  Plan some things first - then start developing your docs.  Maybe that's a unicorn - but seriously - show you want me to use your stuff.

@@ -4,13 +4,13 @@ comments: true
 series: React Data Grid Tutorials
 ---
 
-##Breaking Up Is Hard To Do
+## Breaking Up Is Hard To Do
 My last post walked through creating a quick mock up of a data grid component.  This works to get something displayed, but in the long run, is just impracticle to build anything useful. Sure you can build everything into separate `js` files, but even that is a little slow for my taste during the process.
 
 The next logical step is to break our files up, and then introduce a simple build process to manage everything.  This isn't directly about React, meaning I won't be building anything using the React framework. Instead, I'm going to split up my data grid, use Browserify and Gulp to build everything, and BrowserSync to refresh the page automatically. I'll keep it simple for now, but may additionally add other options later.
 
 
-##Getting The Requirements
+## Getting The Requirements
 Since we are adding some requirements to the build process, the first step is to get `npm` going. If you need to [install npm and node](https://docs.npmjs.com/getting-started/installing-node), do that now.
 
 {% highlight bash%}
@@ -19,21 +19,21 @@ npm init
 
 From here, just follow the prompts, until the `package.json` file is built for you. Now we need a few packages to get things moving.
 
-###Gulp
+### Gulp
 [Gulp](http://gulpjs.com/) is a task automation tool, and lately it's been my choice for running tasks.  There are arguments for and against, but I find the benefits out weigh the issues.  It's really up to you, but for this series, I'm using it, so strap in.
 
-###Browserify
+### Browserify
 [Browserify](http://browserify.org/) is nearly black magic, in my opinion.  It let's me write my front end code in a CommonJS pattern, and then precompiles all of my scripts into one file.  It's really something awesome. You can also use [webpack](http://webpack.github.io/) which appears to be equally as straight forward, but I learned Browserify first.  There are, of course, debates on which is better.
 
 There is another module I'll need for Browserify and Gulp to work together, which is [Vinyl Source Stream](https://www.npmjs.com/package/vinyl-source-stream).  This allows me to use Browserify directly, as opposed to `gulp-browserify` or `gulpify`.  I'm going to keep the requirements to a minimum, so this is all I will add for now.
 
-###Babel(ify)
+### Babel(ify)
 [Babel](https://babeljs.io/) is an es6 and React transformer. It will be used in the bundle process of Browserify, and allow us to use es6 export/imports. Babelify is the transformer that Browserify uses specifically.
 
-###React
+### React
 We could continue to include this from the CDN, but I'm going to move it locally. In a production app - having this localized to the app makes sense - you really don't want to rely on a third party to be up, even if that's what it's designed to do. Sometimes bad things happen, so why chance it.
 
-###The Standards
+### The Standards
 [jQuery](http://jquery.com/) and [Bootstrap](getbootstrap.com) - if you don't know what these are - then you probably aren't reading this. I've also included Browser Sync to reload the browser when I save and build the bundles, and Gulp Watch to watch the files as they change.
 
 That covers it - now we save these as development dependencies:
@@ -42,10 +42,10 @@ That covers it - now we save these as development dependencies:
 npm i --save-dev react bootstrap jquery vinyl-source-stream gulp browserify babelify browser-sync
 {% endhighlight %}
 
-##Building the Build File
+## Building the Build File
 Now that we have all the pieces, let's build out the process. The first step we need is our `Gulpfile.js`.  I often make this a more modular, which you can see in the source code of this blog, but for this project, I'm going to keep it all in one spot.
 
-###Dealing with Externals
+### Dealing with Externals
 Bootstrap, jQuery, and React are not going to change while I'm developing. They may change, but not every time I save my files. It takes extra time to bundle these, so the first thing I want to do is create a bundle with just these libraries, that way I'm only rebuilding my data grid files when saving.
 
 
@@ -81,7 +81,7 @@ Finished 'vendors' after 15 ms
 
 `vendor.js` file now shows up in the `build/js` directory.
 
-###App Files
+### App Files
 Now we need to create some new folders for our `jsx` files to be stored. I made an app folder, and created an `app.jsx` file.  `app.jsx` will require the additional files needed to run the data grid. I'll show you how that's set up in a bit. First, let's look at the gulp task.
 
 {% highlight js %}
@@ -123,7 +123,7 @@ Now that my static libs and app files are set up to build independently, I need 
 
 I am leaving the Bootstrap css file as is for now, but we could easily move that into it's own gulp task and call it from a local place.
 
-##Separate Components
+## Separate Components
 We are nearly there, just a couple more steps to really get this in a place that development is simple. The next step is to move the individual components into their own files. This is a little repetitive, so I'll just show the initial component and the repo will show the final versions.
 
 Let's first take a look at the `app.jsx` file, and how we are now using ES6 modules.
@@ -189,7 +189,7 @@ import DataTable from './datatable';
 import Pagination from './pagination';
 {% endhighlight %}
 
-####Bootstrap and jQuery are Missing
+#### Bootstrap and jQuery are Missing
 
 Even with all of this, Bootstrap and jQuery don't just automatically work. The best solution I currently have for this is to add the following just below the lines above in `app.jsx`.
 
@@ -203,7 +203,7 @@ This feel terribly wrong to me - but I know it works.  I hate using the global v
 
 Rerun `gulp app` and we are back where we started. This may seem like a lot of work - but in the long run, it pays off.
 
-##Auto Reload
+## Auto Reload
 Now that we have gotten this far, there is one last step - auto reloading when we change something.  If you have been following along, you might notice that every time you change a `.jsx` file, you have to run `gulp app` to rebuild your `data-grid.js` file. This is a pain, and often forgotten (at least for me)
 
 So let's use Gulp to do that for us, by watching for changes, and running it automatically.
@@ -241,7 +241,7 @@ gulp.task('default',['browsersync','watch'], function() {});
 
 Now when I run `gulp`, a browser window opens with the app running.  Modify any of the `.jsx` files, and it reloads automatically.
 
-##Wrap Up
+## Wrap Up
 This is my workflow - it's what I know works, and works for me.  There are tons of additional ways to go about the same tasks, and you can modify these for additional support like less preprocessing, minification, sourcemaps, and others.  This will hopefully be a good starting point to explore more, without making it so complicated that understanding the pieces takes additional work.
 
 I've update my [GitHub repo](https://github.com/kellyjandrews/react-tutorial/tree/modular-build) with the source code from this tutorial.  Next steps will be to start building out the components using actual data and not static `render` methods.

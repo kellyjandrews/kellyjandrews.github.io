@@ -5,7 +5,7 @@ comments: true
 
 Over the last couple of days, I have been pounding my head against the wall of what is known as a proxy. I wanted to capture everything I did to make it work, and hope it helps someone down the road attempting the same thing.
 
-####Background
+#### Background
 I have been working on documentation utilizing [Assmeble.io](http://www.assemble.io) - a great Static-Site-Generator (SSG) created by [Jon Schlinkert](https://github.com/jonschlinkert) and [Brian Woodward](https://github.com/doowb). Great tool to build out documentation.  
 
 I am pushing my static files to [Heroku](http://www.heroku.com/), and using [Expressjs](http://expressjs.com/) to serve the static files.  This part was super simple with the following code:
@@ -26,7 +26,7 @@ app.listen(port, function() {
 
 Everything worked great, and it's super fast. Anyone looking to create documentation - it's a great way to go, and I'll be blogging more about how this works in the coming weeks.
 
-####Additional Requirements
+#### Additional Requirements
 Assmeble.io offers a method of blogging.  For most of us, it's fairly straight forward, and if you have developers doing your blogging, it will work for you.  It involves rebuilding your static `html` files and pushing up the changes.  
 
 For those who are less inclined to create files and push code to a server, you may want to consider an alternative. I found myself needing a blogging platform that required a bit more non-developer love.
@@ -35,12 +35,12 @@ Since Assemble is build on [Node](http://nodejs.org/), [Grunt](http://gruntjs.co
 
 I easily made a new Grunt task to take my existing templates, and built new template files specifically for Ghost. How I did this is out of scope for this article, but something I want to share in the future, so watch for that in the next couple weeks.
 
-####Seperation of Concerns
+#### Seperation of Concerns
 What I quickly realized, was that I couldn't easily run two Express apps on one Heroku app. Realistically - you probably shouldn't anyhow, so it needed to be a seperate app.  I now have two Heroku apps running - {site}.herokuapp.com and {site-blog}.herokuapp.com.
 
 Each app ran individually as expected, and things were looking like it was the right direction.
 
-####Then I Hit a Brick Wall
+#### Then I Hit a Brick Wall
 Setting up a [Node-HTTP-Proxy](https://github.com/nodejitsu/node-http-proxy) looked like it was the way to go.  It all seemed fairly easy at first, but I had to work around some issues.
 
 Adding the following code get's the proxy started:

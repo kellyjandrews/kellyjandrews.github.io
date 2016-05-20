@@ -3,12 +3,12 @@ title: Lightning Components and Browserify
 comments: true
 ---
 
-###Lightning Components
+### Lightning Components
 Over the last week, I've been working with the Salesforce Lightning Component Framework. It's a simple way to build single page apps using client side JS and server side Apex. I am in no way a true Salesforce developer - I'm really just a noob - but it's super fun to learn and for any one with a MVC background, you can pick it up quickly.
 
 This is not, however, an overview of how to get started on Lightning - there are other, more qualified tutorials out there like [Reid Carlberg's Newbie Notes](http://reidcarlberg.github.io/lightning-newbie/) or [Christoph Coenraets Lightning Components Tutorial](http://ccoenraets.github.io/salesforce-lightning-tutorial/). If you are looking for a solid front-to-back overview - start with one of these.
 
-###Challenge Accepted
+### Challenge Accepted
 One of the difficulties I have run into during my learning process, is that including a library like [jQuery](http://jquery.com/), isn't as simple as adding a file and calling it in the application. Salesforce uses "static resources" for things like css files, and javascript files.
 
 When you want to use those in a Lightning component, you simply call it like so:
@@ -34,7 +34,7 @@ One would expect this to load jQuery, which, essentially it does, however it's a
 
 This, to me, was a challenge.
 
-###The Dark Magic of Browserify
+### The Dark Magic of Browserify
 I have been toying with [Browserify](http://browserify.org/) for a bit now, and ditched RequireJS some time ago. I was never a fan of the AMD syntax, and I love being able to pull all of my JS together into one file with one command. So I was curious, if it would be at all possible to pull off some magic and load everything with one file.
 
 In my developer console, I created a New->Static Resource, and named it `AppScripts`. It creates a new js file with a sample function in it. I'll use this again in a bit, but went ahead and set it up in the application.
@@ -80,7 +80,7 @@ When `npm run bundle` gets called on the command line - it will take this file, 
 
 I previewed the application in the browser, and my console log showed the text appropriately. I have tried a few other simple tests, and so far, everything appears to load properly and execute.
 
-###So What's Next
+### So What's Next
 Now I'm going to go nuts. So many things I want to try out and see if they will work.  It's not that the current framework is limiting, but it's a restriction not having some go-to libraries. I don't want to reinvent modules that exist, so any way I can get this to work, I'm going to make it happen.
 
 Some ideas to try - bootstrap js components, data grids, knockout, handlebars, and so on. What I have yet to determine is what is available to me at run time.  Some of the controller js will need to be tested - can I use my Browserify bundle to run controller code? No clue - this may not even work at all - I was just excited to get this to work - I had to share.

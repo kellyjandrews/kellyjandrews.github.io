@@ -2,19 +2,19 @@
 title: Fuel SDK Awesomeness
 comments: true
 ---
-####The 800-lb Gorilla
+#### The 800-lb Gorilla
 Building on top of ExactTarget has long since been something developers would have great difficulty with.  SOAP APIs are something not everyone jumps up and down for, with great excitement.
 
 It's just not sexy - it's not the newesst, hottest thing. However, there is something with the FuelAPIs that most new, hot APIs don't have - the power to do something behind it. The ability to scale to over 1 billion emails in a day is not something too many others can say.  Now that - _is_ hot.
 
 So how do you take 2 types of integration, SOAP and REST, each with distinct paths and nuance, and make it easier?  An SDK.
 
-####The Easy Button
+#### The Easy Button
 The FuelSDK has made my life of development night and day.  I can begin creating SOAP or REST calls in a very short time frame, without setting up two types of authentication, and with out having to look up which API does what. Time to live is always a concern, and the FuelSDK
 
 It's hard to directly explain how much impact it has, but showing code is one way visually. Take the following example to create a new data extensions with the fields Email, First Name, and Last Name.
 
-####The Old Way
+#### The Old Way
 
 {% highlight php %}
 <?php
@@ -64,7 +64,7 @@ It's hard to directly explain how much impact it has, but showing code is one wa
 ?>
 {% endhighlight %}
 
-####The New Way
+#### The New Way
 {% highlight php %}
 <?php
   require('../ET_Client.php');

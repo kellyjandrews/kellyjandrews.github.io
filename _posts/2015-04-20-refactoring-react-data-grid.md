@@ -4,12 +4,12 @@ comments: true
 series: React Data Grid Tutorials
 ---
 
-##Self Correction
+## Self Correction
 I spent the last few days really thinking about the `DataGrid` and how to utilize [React](https://facebook.github.io/react/) in the best way possible. `DataGrid` currently works, but if we evaluate individual components, I haven't adhered to keeping these modular and reusable.
 
 Every project, at some point, has to be evaluated and adjusted - so I took the time now to walk through my thought process.
 
-###Why Now?
+### Why Now?
 As I started to implement the search functionality, a few items are glaring issues that needed to be addressed:
 
 1. `DataGrid` state object is simply doing too much. Storing data that will change is proper, however it is also storing computed values - which is completely uneccessary - as well as I started to duplicate some `state` to make things work.
@@ -23,7 +23,7 @@ Maybe you have already spotted some of these issues?  If so, good for you! Durin
 
 In this case, I initially wanted the lower level component to do very little functionality. IF I were simply distributing the data grid as a pre built component, it works. However, after the refactor, I am able to reuse components with less duplicate code.
 
-##State Of The State
+## State Of The State
 Currently the `state` for the `DataGrid` component looks like this:
 
 {% highlight js %}
@@ -58,7 +58,7 @@ This feels so much cleaner. `searchTerm` will come into play later when we get t
 
 `DataGrid` also has several class methods doing many different calculations for the `Pagination` component. `getStartEnd()`, `getPageOptions()`, and `paginateData()` methods all update the older state version. They also feel like they go together - sort of as a class.
 
-###Replacing The Old Guard
+### Replacing The Old Guard
 Since we basically killed our entire `state`, we need a place to get it.  Remember how I mentioned at time of `render()`?  Initially, I wanted a function to just build out everything. I ran into some difficulties trying to figure out how, though. `Static` methods are not aware of `state` or `props`, `Prototype` methods in the component aren't aware of `static` functions.
 
 Enter `class PagedData`. A static class in the `pagination.jsx` file that performs all of the computations needed (save a couple) to populate the `Pagination` component, and we expose it in a  `static` method. We can then pass in our data set, page and displayCount `state` and let the `Pagination` component take care of itself a bit more. It will also make the component reusable, without rewriting all of the functions somewhere else.
@@ -186,7 +186,7 @@ handlePagination(setting) {
 
 Now any thing from an `onChange` event can be handled the same way - by performing `setState` which forces a refresh, calling the `PageData` method, and everything is up-to-date. Since my low level components and `DataGrid` all play well together - I don't even need the function I originally created. Refactor #FTW!
 
-###Default Props
+### Default Props
 One last item to cover, then we can move on. When you are looking for properties in a component, you need to make sure those are set in it's owner so those are available. However, if those aren't included you get errors and such - and sometimes that's actually avoidable because the property could have a default value.  React allows for `defaultProps` to be set up. I created those like this:
 
 
@@ -201,7 +201,7 @@ DataGrid.defaultProps = {
 
 Now when I want to use this component, I can pass in `<DataGrid />` and not blow it up. With this method, I could render the `DataGrid` without any data, and pass it in later. I can also pass in a page, or search term if I have one stored.  This makes our components more flexible to the end user.
 
-##Wrap Up
+## Wrap Up
 I had to. I tried to leave it - but as I got deeper into the search component, I couldn't leave it alone. Some of this comes from a deeper understanding of functional programming, and really separating out functionality into its’ simplest forms. To be perfectly honest, I still feel like I could slim this down even more. I have drastically reduced what's in state, and I've built a more modular set of components. I've also adhered to the top down data flow, by exposing functions in each component for it's owner to call and pass back
 
 The repo that's been refactored also includes the search functionality, which will be in another post very soon.

@@ -8,7 +8,7 @@ Now, working with front-end development has changed so dramatically.  Requiremen
 
 This is where you need some help, and [`Bower`](http://bower.io/) is your answer.  It's super simple, and contiues to gain support from the developer community as a tool to adopt. Let me show you how you can utilize it in your workflow. You can follow along [on Github](https://github.com/kellyjandrews/bower-demo).
 
-####Installing Bower
+#### Installing Bower
 First, you need to have `node.js` and `npm` installed on your machine already.  If not, [this link](http://www.joyent.com/blog/installing-node-and-npm/) should help you out.
 
 After you have those requirements, it get easier. First, install the package:
@@ -29,7 +29,7 @@ bower search jquery
 
 See what I mean? You can search right in your terminal. Another method to look for them has been presented by [Sindre Sorhus](https://github.com/sindresorhus) and you can [find it here](http://sindresorhus.com/bower-components/). It is a great search tool that is nicely laid out. Either way, you will be searching for your packages to get the proper name, so `Bower` knows what to install.
 
-####Installing Packages
+#### Installing Packages
 Speaking of install, let's do that now.
 
 {% highlight console %}
@@ -41,7 +41,7 @@ This command installs the latest version of `jquery`, right in your project unde
 
 Using the `bower install` function for every library can get tedious, and really, defeats the purpose. So let's try another way.
 
-####bower.json
+#### bower.json
 
 Go ahead and run in your terminal
 
@@ -84,7 +84,7 @@ They thought of this too, and now there is a cache of your previous installs.  Y
 bower cache clean
 {% endhighlight %}
 
-####Versioning
+#### Versioning
 
 At this point, it makes sense to explain a little further the verion numbers and symbols.  
 
@@ -103,7 +103,7 @@ Each individual package has a set of requirements, and `Bower` helps you through
 
 This is where the power is, and the huge time saver.  I've spent hours trying to understand why I couldn't fix errors, only to find it was simply a library issue with versions.  Frustrating!  `Bower` does a great job giving you exactly what you need to get up and running.
 
-####But wait - there's more!
+#### But wait - there's more!
 Now that you are getting your libraries the easy way, what if your application structure looks like this:
 
 {% highlight console %}
@@ -125,7 +125,7 @@ And you don't want to reference `bower_components`.  You don't have to with the 
 
 Voila - now it fits a little better with your specific app layout.  There is a ton more you can do with the config file, but this is probably the most important for you to use.
 
-####Wrap-up
+#### Wrap-up
 It's easy to see that you can manage your project's dependencies using `Bower` and the `bower.json` file.   You can then couple this with a compiler like [`Grunt`](http://gruntjs.com/) or [`Brunch`](http://brunch.io/) to pull in the required files into your final build, and greatly reduce your time in getting projects out the door.  
 
 I highly recommend trying it out and getting it into your workflow, if you haven't already started!
