@@ -1,5 +1,4 @@
 bower_components/
 node_modules/
 .sass-cache/
-_site/
 Gemfile.lock

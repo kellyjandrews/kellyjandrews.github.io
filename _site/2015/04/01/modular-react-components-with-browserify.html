@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>kellyjandrews</title>
+    <link rel='stylesheet' href='/assets/css/styles.css' type='text/css' media='all' />
+    <script src="/assets/js/bundle.js"></script>
+    <link rel="alternate" type="application/rss+xml" title="kellyjandrews" href="/rss/">
+    <link rel="canonical" href="http://kellyjandrews.com/" />
+</head>
+
+
+<body>
+  <nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="row">
+    <div class="col-md-6">
+      <header class="site-header">
+        <h1>
+            <a href="/" title="kellyjandrews">kelly j andrews</a>
+        </h1>
+    </header>
+</div>
+    <div class="col-md-6 text-right">
+      <a href="/experience" class="navlink"><i class="fa fa-info-circle fa-2x"></i></a>
+      <a href="https://github.com/kellyjandrews" target="_blank"><i class="fa fa-github fa-2x"></i></a>
+      <a href="https://twitter.com/kellyjandrews" target="_blank" ><i class="fa fa-twitter fa-2x"></i></a>
+      <a href="https://www.linkedin.com/in/kjandrews/en" target="_blank" ><i class="fa fa-linkedin fa-2x"></i></a>
+      <a href="https://stackexchange.com/users/2222625/kelly-j-andrews" target="_blank"><i class="fa fa-stack-exchange fa-2x"></i></a>
+  </div>
+  </div>
+  </div>
+</nav>
+
+
+    <div class="container-fluid">
+        <div class="padded">
+	<div class="col-md-8 col-md-offset-2">
+  <h1>Modular React Components With Browserify</h1>
+<h2 id="breaking-up-is-hard-to-do">Breaking Up Is Hard To Do</h2>
+<p>My last post walked through creating a quick mock up of a data grid component.  This works to get something displayed, but in the long run, is just impracticle to build anything useful. Sure you can build everything into separate <code class="highlighter-rouge">js</code> files, but even that is a little slow for my taste during the process.</p>
+
+<p>The next logical step is to break our files up, and then introduce a simple build process to manage everything.  This isn’t directly about React, meaning I won’t be building anything using the React framework. Instead, I’m going to split up my data grid, use Browserify and Gulp to build everything, and BrowserSync to refresh the page automatically. I’ll keep it simple for now, but may additionally add other options later.</p>
+
+<h2 id="getting-the-requirements">Getting The Requirements</h2>
+<p>Since we are adding some requirements to the build process, the first step is to get <code class="highlighter-rouge">npm</code> going. If you need to <a href="https://docs.npmjs.com/getting-started/installing-node">install npm and node</a>, do that now.</p>
+
+<pre><code class="language-shell```">npm init
+</code></pre>
+
+<p>From here, just follow the prompts, until the <code class="highlighter-rouge">package.json</code> file is built for you. Now we need a few packages to get things moving.</p>
+
+<h3 id="gulp">Gulp</h3>
+<p><a href="http://gulpjs.com/">Gulp</a> is a task automation tool, and lately it’s been my choice for running tasks.  There are arguments for and against, but I find the benefits out weigh the issues.  It’s really up to you, but for this series, I’m using it, so strap in.</p>
+
+<h3 id="browserify">Browserify</h3>
+<p><a href="http://browserify.org/">Browserify</a> is nearly black magic, in my opinion.  It let’s me write my front end code in a CommonJS pattern, and then precompiles all of my scripts into one file.  It’s really something awesome. You can also use <a href="http://webpack.github.io/">webpack</a> which appears to be equally as straight forward, but I learned Browserify first.  There are, of course, debates on which is better.</p>
+
+<p>There is another module I’ll need for Browserify and Gulp to work together, which is <a href="https://www.npmjs.com/package/vinyl-source-stream">Vinyl Source Stream</a>.  This allows me to use Browserify directly, as opposed to <code class="highlighter-rouge">gulp-browserify</code> or <code class="highlighter-rouge">gulpify</code>.  I’m going to keep the requirements to a minimum, so this is all I will add for now.</p>
+
+<h3 id="babelify">Babel(ify)</h3>
+<p><a href="https://babeljs.io/">Babel</a> is an es6 and React transformer. It will be used in the bundle process of Browserify, and allow us to use es6 export/imports. Babelify is the transformer that Browserify uses specifically.</p>
+
+<h3 id="react">React</h3>
+<p>We could continue to include this from the CDN, but I’m going to move it locally. In a production app - having this localized to the app makes sense - you really don’t want to rely on a third party to be up, even if that’s what it’s designed to do. Sometimes bad things happen, so why chance it.</p>
+
+<h3 id="the-standards">The Standards</h3>
+<p><a href="http://jquery.com/">jQuery</a> and <a href="getbootstrap.com">Bootstrap</a> - if you don’t know what these are - then you probably aren’t reading this. I’ve also included Browser Sync to reload the browser when I save and build the bundles, and Gulp Watch to watch the files as they change.</p>
+
+<p>That covers it - now we save these as development dependencies:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>npm i --save-dev react bootstrap jquery vinyl-source-stream gulp browserify babelify browser-sync
+</code></pre>
+</div>
+
+<h2 id="building-the-build-file">Building the Build File</h2>
+<p>Now that we have all the pieces, let’s build out the process. The first step we need is our <code class="highlighter-rouge">Gulpfile.js</code>.  I often make this a more modular, which you can see in the source code of this blog, but for this project, I’m going to keep it all in one spot.</p>
+
+<h3 id="dealing-with-externals">Dealing with Externals</h3>
+<p>Bootstrap, jQuery, and React are not going to change while I’m developing. They may change, but not every time I save my files. It takes extra time to bundle these, so the first thing I want to do is create a bundle with just these libraries, that way I’m only rebuilding my data grid files when saving.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">vendors</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="s1">'react'</span><span class="p">,</span>
+  <span class="s1">'bootstrap'</span><span class="p">,</span>
+  <span class="s1">'jquery'</span>
+<span class="p">];</span>
+
+<span class="nx">gulp</span><span class="p">.</span><span class="nx">task</span><span class="p">(</span><span class="s1">'vendors'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">stream</span> <span class="o">=</span> <span class="nx">browserify</span><span class="p">({</span>
+            <span class="na">debug</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+            <span class="na">require</span><span class="p">:</span> <span class="nx">vendors</span>
+        <span class="p">});</span>
+
+    <span class="nx">stream</span><span class="p">.</span><span class="nx">bundle</span><span class="p">()</span>
+          <span class="p">.</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">source</span><span class="p">(</span><span class="s1">'vendors.js'</span><span class="p">))</span>
+          <span class="p">.</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">gulp</span><span class="p">.</span><span class="nx">dest</span><span class="p">(</span><span class="s1">'build/js'</span><span class="p">));</span>
+
+    <span class="k">return</span> <span class="nx">stream</span><span class="p">;</span>
+<span class="p">});</span>
+</code></pre>
+</div>
+
+<p>I create an array with the vendors I want to include. I then pull these into a gulp task and bundle them.  The output is the <code class="highlighter-rouge">vendors.js</code> file in my build directory.  This works for now - but you can eventually watch for production vs development environments and minify accordingly. I’m keeping it simple for the moment to make the process clearer.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>gulp vendors
+Using gulpfile ~/Apps/react-tutorial/Gulpfile.js
+Starting <span class="s1">'vendors'</span>...
+Finished <span class="s1">'vendors'</span> after 15 ms
+</code></pre>
+</div>
+
+<p><code class="highlighter-rouge">vendor.js</code> file now shows up in the <code class="highlighter-rouge">build/js</code> directory.</p>
+
+<h3 id="app-files">App Files</h3>
+<p>Now we need to create some new folders for our <code class="highlighter-rouge">jsx</code> files to be stored. I made an app folder, and created an <code class="highlighter-rouge">app.jsx</code> file.  <code class="highlighter-rouge">app.jsx</code> will require the additional files needed to run the data grid. I’ll show you how that’s set up in a bit. First, let’s look at the gulp task.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="nx">gulp</span><span class="p">.</span><span class="nx">task</span><span class="p">(</span><span class="s1">'app'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">stream</span> <span class="o">=</span> <span class="nx">browserify</span><span class="p">({</span>
+            <span class="na">entries</span><span class="p">:</span> <span class="p">[</span><span class="s1">'./app/app.jsx'</span><span class="p">],</span>
+            <span class="na">transform</span><span class="p">:</span> <span class="p">[</span><span class="nx">babelify</span><span class="p">],</span>
+            <span class="na">debug</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+            <span class="na">extensions</span><span class="p">:</span> <span class="p">[</span><span class="s1">'.jsx'</span><span class="p">],</span>
+            <span class="na">fullPaths</span><span class="p">:</span> <span class="kc">false</span>
+        <span class="p">});</span>
+
+    <span class="nx">vendors</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">vendor</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">stream</span><span class="p">.</span><span class="nx">external</span><span class="p">(</span><span class="nx">vendor</span><span class="p">);</span>
+    <span class="p">});</span>
+
+    <span class="k">return</span> <span class="nx">stream</span><span class="p">.</span><span class="nx">bundle</span><span class="p">()</span>
+                 <span class="p">.</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">source</span><span class="p">(</span><span class="s1">'data-grid.js'</span><span class="p">))</span>
+                 <span class="p">.</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">gulp</span><span class="p">.</span><span class="nx">dest</span><span class="p">(</span><span class="s1">'build/js'</span><span class="p">));</span>
+<span class="p">});</span>
+</code></pre>
+</div>
+
+<p>This is very similar to the vendor task, but I add a couple of items that need to be explained. I add the <code class="highlighter-rouge">entries</code>, <code class="highlighter-rouge">transform</code>, <code class="highlighter-rouge">extensions</code>, and <code class="highlighter-rouge">fullPaths</code> properties to the stream. This tells Browserify where my initial file is located, what transforms to perform - in this case Babelify (which is runnint the react transform), which extensions are valid, and not require the full path.  I then iterate over the <code class="highlighter-rouge">vendors</code> array and create external resources, so Browserify doesn’t pull those into my <code class="highlighter-rouge">data-grid.js</code> file.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>gulp app
+Using gulpfile ~/Apps/react-tutorial/Gulpfile.js
+Starting <span class="s1">'app'</span>...
+Finished <span class="s1">'app'</span> after 15 ms
+</code></pre>
+</div>
+
+<p>Now that my static libs and app files are set up to build independently, I need to modify my index file to use those files.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"build/js/vendors.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+...
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"build/js/data-grid.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+</code></pre>
+</div>
+
+<p>I am leaving the Bootstrap css file as is for now, but we could easily move that into it’s own gulp task and call it from a local place.</p>
+
+<h2 id="separate-components">Separate Components</h2>
+<p>We are nearly there, just a couple more steps to really get this in a place that development is simple. The next step is to move the individual components into their own files. This is a little repetitive, so I’ll just show the initial component and the repo will show the final versions.</p>
+
+<p>Let’s first take a look at the <code class="highlighter-rouge">app.jsx</code> file, and how we are now using ES6 modules.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="kr">import</span> <span class="nx">React</span> <span class="nx">from</span> <span class="s1">'react'</span><span class="p">;</span>
+
+<span class="kr">class</span> <span class="nx">DataGrid</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span><span class="p">{</span>
+  <span class="nx">anotherMethod</span><span class="p">()</span> <span class="p">{</span>
+
+  <span class="p">},</span>
+  <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span>
+      <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">"row"</span><span class="o">&gt;</span>
+          <span class="o">&lt;</span><span class="nx">TitleBar</span> <span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">"dataTable"</span><span class="o">&gt;</span>
+          <span class="o">&lt;</span><span class="nx">DataTable</span> <span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>          <span class="o">&lt;</span><span class="nx">Pagination</span> <span class="o">/&gt;</span>
+      <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="nx">React</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="o">&lt;</span><span class="nx">DataGrid</span> <span class="o">/&gt;</span><span class="p">,</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">'dataGrid'</span><span class="p">));</span>
+</code></pre>
+</div>
+
+<p>You will need to rerun <code class="highlighter-rouge">gulp app</code>.</p>
+
+<p>If you haven’t read up on using ES6, there is a <a href="http://www.jayway.com/2015/03/04/using-react-with-ecmascript-6/">great tutorial</a> on using them with react. This is the future of javascript - and I like it.</p>
+
+<p>The <code class="highlighter-rouge">app.jsx</code> file is still missing a few items to get it working. We have yet to import the additional components.  Let’s start with the <code class="highlighter-rouge">TitleBar</code> component.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="kr">import</span> <span class="nx">React</span> <span class="nx">from</span> <span class="s1">'react'</span><span class="p">;</span>
+
+<span class="kr">class</span> <span class="nx">TitleBar</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span><span class="p">{</span>
+  <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span>
+      <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">"col-md-6"</span><span class="o">&gt;</span>
+          <span class="o">&lt;</span><span class="nx">h2</span><span class="o">&gt;</span><span class="nx">My</span> <span class="nx">Contacts</span><span class="o">&lt;</span><span class="sr">/h2</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>        <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">"col-md-6 searchBox"</span><span class="o">&gt;</span>
+          <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text"</span> <span class="nx">className</span><span class="o">=</span><span class="s2">"form-control pull-right"</span> <span class="nx">placeholder</span><span class="o">=</span><span class="s2">"Search"</span> <span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>      <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kr">export</span> <span class="k">default</span> <span class="nx">TitleBar</span><span class="p">;</span>
+</code></pre>
+</div>
+
+<p>With some quick modifications - our <code class="highlighter-rouge">TitleBar</code> component is ready to be consumed by our <code class="highlighter-rouge">app.jsx</code> file. I already have made the other modules as well in a similar fashion, so now our <code class="highlighter-rouge">app.jsx</code> file starts with:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="kr">import</span> <span class="nx">React</span> <span class="nx">from</span> <span class="s1">'react'</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">TitleBar</span> <span class="nx">from</span> <span class="s1">'./title-bar'</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">DataTable</span> <span class="nx">from</span> <span class="s1">'./datatable'</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">Pagination</span> <span class="nx">from</span> <span class="s1">'./pagination'</span><span class="p">;</span>
+</code></pre>
+</div>
+
+<h4 id="bootstrap-and-jquery-are-missing">Bootstrap and jQuery are Missing</h4>
+
+<p>Even with all of this, Bootstrap and jQuery don’t just automatically work. The best solution I currently have for this is to add the following just below the lines above in <code class="highlighter-rouge">app.jsx</code>.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="kr">import</span> <span class="nx">jQuery</span> <span class="nx">from</span> <span class="s1">'jquery'</span><span class="p">;</span>
+<span class="nx">global</span><span class="p">.</span><span class="nx">jQuery</span> <span class="o">=</span> <span class="nx">jQuery</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">bootstrap</span> <span class="nx">from</span> <span class="s1">'bootstrap'</span><span class="p">;</span>
+</code></pre>
+</div>
+
+<p>This feel terribly wrong to me - but I know it works.  I hate using the global variable, and eventually I will land on the right combination to resolve this, and get it sorted. For now. This is what I have.</p>
+
+<p>Rerun <code class="highlighter-rouge">gulp app</code> and we are back where we started. This may seem like a lot of work - but in the long run, it pays off.</p>
+
+<h2 id="auto-reload">Auto Reload</h2>
+<p>Now that we have gotten this far, there is one last step - auto reloading when we change something.  If you have been following along, you might notice that every time you change a <code class="highlighter-rouge">.jsx</code> file, you have to run <code class="highlighter-rouge">gulp app</code> to rebuild your <code class="highlighter-rouge">data-grid.js</code> file. This is a pain, and often forgotten (at least for me)</p>
+
+<p>So let’s use Gulp to do that for us, by watching for changes, and running it automatically.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="nx">gulp</span><span class="p">.</span><span class="nx">task</span><span class="p">(</span><span class="s1">'watch'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'app'</span><span class="p">],</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="nx">gulp</span><span class="p">.</span><span class="nx">watch</span><span class="p">([</span><span class="s1">'./app/**/*.jsx'</span><span class="p">],</span> <span class="p">[</span><span class="s1">'app'</span><span class="p">])</span>
+<span class="p">});</span>
+</code></pre>
+</div>
+
+<p>This is super simple - watch all <code class="highlighter-rouge">.jsx</code> files, and run the <code class="highlighter-rouge">app</code> task when they change. Now it’s reloading without our manual input.</p>
+
+<p>One last automation step, and we can call it a day.
+<code class="highlighter-rouge">js
+gulp.task('browsersync',['vendors','app'], function () {
+    browserSync({
+  		server: {
+  			baseDir: './'
+  		},
+  		notify: false,
+  		browser: ["google chrome"]
+	});
+});
+</code></p>
+
+<p>This allows us to fire up a testing server, and loads a browser window when we run it. I include the <code class="highlighter-rouge">vendor</code> and <code class="highlighter-rouge">app</code> gulp task here to ensure they are complete prior to starting the server. I then slightly modify my <code class="highlighter-rouge">watch</code> task, and add a <code class="highlighter-rouge">default</code> task to run using <code class="highlighter-rouge">gulp</code>.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="nx">gulp</span><span class="p">.</span><span class="nx">task</span><span class="p">(</span><span class="s1">'watch'</span><span class="p">,</span> <span class="p">[],</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="nx">gulp</span><span class="p">.</span><span class="nx">watch</span><span class="p">([</span><span class="s1">'./app/**/*.jsx'</span><span class="p">],</span> <span class="p">[</span><span class="s1">'app'</span><span class="p">,</span> <span class="nx">browserSync</span><span class="p">.</span><span class="nx">reload</span><span class="p">]);</span>
+<span class="p">});</span>
+
+<span class="nx">gulp</span><span class="p">.</span><span class="nx">task</span><span class="p">(</span><span class="s1">'default'</span><span class="p">,[</span><span class="s1">'browsersync'</span><span class="p">,</span><span class="s1">'watch'</span><span class="p">],</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{});</span>
+</code></pre>
+</div>
+
+<p>Now when I run <code class="highlighter-rouge">gulp</code>, a browser window opens with the app running.  Modify any of the <code class="highlighter-rouge">.jsx</code> files, and it reloads automatically.</p>
+
+<h2 id="wrap-up">Wrap Up</h2>
+<p>This is my workflow - it’s what I know works, and works for me.  There are tons of additional ways to go about the same tasks, and you can modify these for additional support like less preprocessing, minification, sourcemaps, and others.  This will hopefully be a good starting point to explore more, without making it so complicated that understanding the pieces takes additional work.</p>
+
+<p>I’ve update my <a href="https://github.com/kellyjandrews/react-tutorial/tree/modular-build">GitHub repo</a> with the source code from this tutorial.  Next steps will be to start building out the components using actual data and not static <code class="highlighter-rouge">render</code> methods.</p>
+
+
+
+  <h4>React Data Grid Tutorials</h4>
+  <ol>
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      
+      <li><a href="/2015/03/30/react-up-and-running.html" title="React - Up and Running">React - Up and Running</a></li>
+      
+    
+  
+    
+      
+      <li class="active">Modular React Components With Browserify</li>
+      
+    
+  
+    
+      
+      <li><a href="/2015/04/08/data-driven-react-components.html" title="Data Driven React Components">Data Driven React Components</a></li>
+      
+    
+  
+    
+  
+    
+      
+      <li><a href="/2015/04/13/react-component-communication.html" title="React Component Communication">React Component Communication</a></li>
+      
+    
+  
+    
+      
+      <li><a href="/2015/04/20/refactoring-react-data-grid.html" title="Refactoring React Data Grid">Refactoring React Data Grid</a></li>
+      
+    
+  
+    
+      
+      <li><a href="/2015/04/21/data-filtering-for-react.html" title="Data Filtering for React">Data Filtering for React</a></li>
+      
+    
+  
+  </ol>
+
+
+
+<div id="disqus_thread"></div>
+   <script type="text/javascript">
+       /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+       var disqus_shortname = 'kellyjandrews'; // required: replace example with your forum shortname
+       var disqus_title = "Modular React Components With Browserify";
+       /* * * DON'T EDIT BELOW THIS LINE * * */
+       (function() {
+           var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+           dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+           (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+       })();
+   </script>
+   <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+</div>
+
+</div>
+
+    </div>
+
+    <footer class="text-center">
+    <small>All content copyright <a href="/">kelly j andrews</a> &copy; 2016 &bull; All rights reserved.</small>
+    </a>
+</footer>
+
+    <script>
+    (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function() {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-47461674-1', 'kellyjandrews.com');
+    ga('send', 'pageview');
+</script>
+</body>
+
+</html>

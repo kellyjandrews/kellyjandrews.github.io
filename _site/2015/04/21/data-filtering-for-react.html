@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>kellyjandrews</title>
+    <link rel='stylesheet' href='/assets/css/styles.css' type='text/css' media='all' />
+    <script src="/assets/js/bundle.js"></script>
+    <link rel="alternate" type="application/rss+xml" title="kellyjandrews" href="/rss/">
+    <link rel="canonical" href="http://kellyjandrews.com/" />
+</head>
+
+
+<body>
+  <nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="row">
+    <div class="col-md-6">
+      <header class="site-header">
+        <h1>
+            <a href="/" title="kellyjandrews">kelly j andrews</a>
+        </h1>
+    </header>
+</div>
+    <div class="col-md-6 text-right">
+      <a href="/experience" class="navlink"><i class="fa fa-info-circle fa-2x"></i></a>
+      <a href="https://github.com/kellyjandrews" target="_blank"><i class="fa fa-github fa-2x"></i></a>
+      <a href="https://twitter.com/kellyjandrews" target="_blank" ><i class="fa fa-twitter fa-2x"></i></a>
+      <a href="https://www.linkedin.com/in/kjandrews/en" target="_blank" ><i class="fa fa-linkedin fa-2x"></i></a>
+      <a href="https://stackexchange.com/users/2222625/kelly-j-andrews" target="_blank"><i class="fa fa-stack-exchange fa-2x"></i></a>
+  </div>
+  </div>
+  </div>
+</nav>
+
+
+    <div class="container-fluid">
+        <div class="padded">
+	<div class="col-md-8 col-md-offset-2">
+  <h1>Data Filtering for React</h1>
+<h2 id="weve-come-so-far">We’ve Come So Far</h2>
+<p>At this point in the series, our <code class="highlighter-rouge">DataGrid</code> component has come so far. Starting with only a mockup and static html, we now have a UI component that displays paginated data, and updates based on user interaction. Data is flowing top down, and with a recently refactored code base, we have arranged the workload to the component level allow for greater modularity.</p>
+
+<p>Now, let’s implement the search feature - which is actually quite easier than you’d think.</p>
+
+<h2 id="search-set-up">Search Set Up</h2>
+<p>The first step to get the search working, is to get the value of the search box and pass it back to the owner, since our data lives there. This is similar to the way <code class="highlighter-rouge">Pagination</code> uses <code class="highlighter-rouge">onChange</code> events to send back information to <code class="highlighter-rouge">DataGrid</code>.</p>
+
+<p><code class="highlighter-rouge">TitleBar</code> doesn’t make any sense, and the component is actually the <code class="highlighter-rouge">SearchBox</code>. I’ve made that change, and our search box component looks like this:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="cm">/* searchbox.jsx */</span>
+<span class="kr">class</span> <span class="nx">SearchBox</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span><span class="p">{</span>
+  <span class="nx">constructor</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kr">super</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">handleKeyPress</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">handleKeyPress</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="nx">handleKeyPress</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">onChange</span><span class="p">({</span><span class="na">searchTerm</span><span class="p">:</span> <span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">value</span><span class="p">});</span>
+  <span class="p">}</span>
+
+  <span class="kr">static</span> <span class="nx">filterData</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span><span class="nx">filter</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">filter</span> <span class="o">===</span> <span class="s2">""</span> <span class="o">||</span> <span class="o">!</span><span class="nx">filter</span><span class="p">)</span> <span class="p">{</span><span class="k">return</span> <span class="nx">data</span><span class="p">};</span>
+    <span class="k">return</span> <span class="p">(</span>
+      <span class="nx">data</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">o</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="p">(</span>
+          <span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="nx">o</span><span class="p">).</span><span class="nx">some</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">v</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nx">o</span><span class="p">[</span><span class="nx">v</span><span class="p">].</span><span class="nx">includes</span><span class="p">(</span><span class="nx">filter</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">());</span>
+          <span class="p">})</span>
+        <span class="p">)</span>
+      <span class="p">})</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span>
+      <span class="o">&lt;</span><span class="nx">span</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text"</span> <span class="nx">className</span><span class="o">=</span><span class="s2">"form-control pull-right"</span> <span class="nx">placeholder</span><span class="o">=</span><span class="s2">"Search"</span> <span class="nx">onChange</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">handleKeyPress</span><span class="p">}</span> <span class="nx">value</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">searchTerm</span><span class="p">}</span> <span class="sr">/</span><span class="err">&gt;
+</span>      <span class="o">&lt;</span><span class="sr">/span</span><span class="err">&gt;
+</span>    <span class="p">);</span>
+  <span class="p">}</span>
+
+<span class="p">};</span>
+
+<span class="kr">export</span> <span class="k">default</span> <span class="nx">SearchBox</span><span class="p">;</span>
+</code></pre>
+</div>
+
+<p>Once again, our friend <code class="highlighter-rouge">onChange</code> makes an appearance, calling the <code class="highlighter-rouge">handleKeyPress()</code> method in the class instance. This method then passes back the object <code class="highlighter-rouge"><span class="p">{</span><span class="err">searchTerm:</span><span class="w"> </span><span class="err">e.target.value</span><span class="p">}</span></code> to the callback method in the owner, <code class="highlighter-rouge">DataGrid</code>.  We bind <code class="highlighter-rouge">handleKeyPress</code> to the current instance in the contructor method. The non ES6 method uses <code class="highlighter-rouge">createClass()</code> to automatically bind methods to the component.  Since we are now extending a base class, that bit of functionality went away.  You can read more about the decision behind that on the <a href="https://facebook.github.io/react/blog/2015/01/27/react-v0.13.0-beta-1.html#autobinding">React blog</a>. I can’t wait for ES7 already!</p>
+
+<p>The real work with this component is the static <code class="highlighter-rouge">filterData()</code> method, which takes an array of objects and a filter, and returns the filtered array when the object matches anywhere. This method can now be called from any other owner that utilizes <code class="highlighter-rouge">SearchBox</code> with consistent results.</p>
+
+<h2 id="wrap-up">Wrap Up</h2>
+<p>This was a short one - but as I implement new functionality - especially after the refactor - the code just gets easier. The filter is fairly simple, and expects a one level deep object - we could easily modify that for additional cases.  Since it’s in this component - any other consumers now have access to the updates as well.</p>
+
+<p>I’ve updated my <a href="https://github.com/kellyjandrews/react-tutorial/tree/pagination">GitHub repo</a> with the source code from this tutorial.</p>
+
+
+
+  <h4>React Data Grid Tutorials</h4>
+  <ol>
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      
+      <li><a href="/2015/03/30/react-up-and-running.html" title="React - Up and Running">React - Up and Running</a></li>
+      
+    
+  
+    
+      
+      <li><a href="/2015/04/01/modular-react-components-with-browserify.html" title="Modular React Components With Browserify">Modular React Components With Browserify</a></li>
+      
+    
+  
+    
+      
+      <li><a href="/2015/04/08/data-driven-react-components.html" title="Data Driven React Components">Data Driven React Components</a></li>
+      
+    
+  
+    
+  
+    
+      
+      <li><a href="/2015/04/13/react-component-communication.html" title="React Component Communication">React Component Communication</a></li>
+      
+    
+  
+    
+      
+      <li><a href="/2015/04/20/refactoring-react-data-grid.html" title="Refactoring React Data Grid">Refactoring React Data Grid</a></li>
+      
+    
+  
+    
+      
+      <li class="active">Data Filtering for React</li>
+      
+    
+  
+  </ol>
+
+
+
+<div id="disqus_thread"></div>
+   <script type="text/javascript">
+       /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+       var disqus_shortname = 'kellyjandrews'; // required: replace example with your forum shortname
+       var disqus_title = "Data Filtering for React";
+       /* * * DON'T EDIT BELOW THIS LINE * * */
+       (function() {
+           var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+           dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+           (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+       })();
+   </script>
+   <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+</div>
+
+</div>
+
+    </div>
+
+    <footer class="text-center">
+    <small>All content copyright <a href="/">kelly j andrews</a> &copy; 2016 &bull; All rights reserved.</small>
+    </a>
+</footer>
+
+    <script>
+    (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function() {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-47461674-1', 'kellyjandrews.com');
+    ga('send', 'pageview');
+</script>
+</body>
+
+</html>

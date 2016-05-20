@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>kellyjandrews</title>
+    <link rel='stylesheet' href='/assets/css/styles.css' type='text/css' media='all' />
+    <script src="/assets/js/bundle.js"></script>
+    <link rel="alternate" type="application/rss+xml" title="kellyjandrews" href="/rss/">
+    <link rel="canonical" href="http://kellyjandrews.com/" />
+</head>
+
+
+<body>
+  <nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="row">
+    <div class="col-md-6">
+      <header class="site-header">
+        <h1>
+            <a href="/" title="kellyjandrews">kelly j andrews</a>
+        </h1>
+    </header>
+</div>
+    <div class="col-md-6 text-right">
+      <a href="/experience" class="navlink"><i class="fa fa-info-circle fa-2x"></i></a>
+      <a href="https://github.com/kellyjandrews" target="_blank"><i class="fa fa-github fa-2x"></i></a>
+      <a href="https://twitter.com/kellyjandrews" target="_blank" ><i class="fa fa-twitter fa-2x"></i></a>
+      <a href="https://www.linkedin.com/in/kjandrews/en" target="_blank" ><i class="fa fa-linkedin fa-2x"></i></a>
+      <a href="https://stackexchange.com/users/2222625/kelly-j-andrews" target="_blank"><i class="fa fa-stack-exchange fa-2x"></i></a>
+  </div>
+  </div>
+  </div>
+</nav>
+
+
+    <div class="container-fluid">
+        <div class="padded">
+	<div class="col-md-8 col-md-offset-2">
+  <h1>Lightning Components and Browserify</h1>
+<h3 id="lightning-components">Lightning Components</h3>
+<p>Over the last week, I’ve been working with the Salesforce Lightning Component Framework. It’s a simple way to build single page apps using client side JS and server side Apex. I am in no way a true Salesforce developer - I’m really just a noob - but it’s super fun to learn and for any one with a MVC background, you can pick it up quickly.</p>
+
+<p>This is not, however, an overview of how to get started on Lightning - there are other, more qualified tutorials out there like <a href="http://reidcarlberg.github.io/lightning-newbie/">Reid Carlberg’s Newbie Notes</a> or <a href="http://ccoenraets.github.io/salesforce-lightning-tutorial/">Christoph Coenraets Lightning Components Tutorial</a>. If you are looking for a solid front-to-back overview - start with one of these.</p>
+
+<h3 id="challenge-accepted">Challenge Accepted</h3>
+<p>One of the difficulties I have run into during my learning process, is that including a library like <a href="http://jquery.com/">jQuery</a>, isn’t as simple as adding a file and calling it in the application. Salesforce uses “static resources” for things like css files, and javascript files.</p>
+
+<p>When you want to use those in a Lightning component, you simply call it like so:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;aura:application</span> <span class="nt">&gt;</span>
+    <span class="nt">&lt;link</span> <span class="na">href=</span><span class="s">'/resource/bootstrap/'</span> <span class="na">rel=</span><span class="s">"stylesheet"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/aura:application&gt;</span>
+</code></pre>
+</div>
+
+<p>This calls the static resource that is the css file for <a href="http://developer.salesforcefoundation.org/bootstrap-sf1/">Bootstrap SF1 theme</a>.</p>
+
+<p>Based on this, simply adding a jQuery static resource should be a piece of cake.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;aura:application</span> <span class="nt">&gt;</span>
+    <span class="nt">&lt;script</span> <span class="na">src=</span><span class="s">"/resource/jQuery/"</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;link</span> <span class="na">href=</span><span class="s">'/resource/bootstrap/'</span> <span class="na">rel=</span><span class="s">"stylesheet"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/aura:application&gt;</span>
+</code></pre>
+</div>
+
+<p>One would expect this to load jQuery, which, essentially it does, however it’s a bit of a race case.  The script loads a few milliseconds after the application, and you can’t actually use it. There is a <a href="https://developer.salesforce.com/forums/ForumsMain?id=906F0000000AmazIAC">great thread</a> covering this behavior, and I won’t go into much detail here, but the solution is to use <a href="http://requirejs.org/">RequireJS</a> in a component, and an event to listen for everything to be loaded, and then load the RequireJS config and all of the static resources.</p>
+
+<p>This, to me, was a challenge.</p>
+
+<h3 id="the-dark-magic-of-browserify">The Dark Magic of Browserify</h3>
+<p>I have been toying with <a href="http://browserify.org/">Browserify</a> for a bit now, and ditched RequireJS some time ago. I was never a fan of the AMD syntax, and I love being able to pull all of my JS together into one file with one command. So I was curious, if it would be at all possible to pull off some magic and load everything with one file.</p>
+
+<p>In my developer console, I created a New-&gt;Static Resource, and named it <code class="highlighter-rouge">AppScripts</code>. It creates a new js file with a sample function in it. I’ll use this again in a bit, but went ahead and set it up in the application.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;aura:application</span> <span class="nt">&gt;</span>
+    <span class="nt">&lt;script</span> <span class="na">src=</span><span class="s">"/resource/AppScripts/"</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;link</span> <span class="na">href=</span><span class="s">'/resource/bootstrap/'</span> <span class="na">rel=</span><span class="s">"stylesheet"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/aura:application&gt;</span>
+</code></pre>
+</div>
+
+<p>Now I turned my attention to my local machine. I’m not going to go over all the ins and outs of Browserify, but I will walk you through what I did to set it up.</p>
+
+<p>First, you have to get set up a bit, and install a couple things. You will be using <a href="https://www.npmjs.com">NPM</a> to manage your packages, so go through a quick <code class="highlighter-rouge">npm init</code> process first. Once that’s complete, open up your <code class="highlighter-rouge">package.json</code> and update your <code class="highlighter-rouge">scripts</code> section.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="s2">"scripts"</span><span class="err">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="nt">"bundle"</span><span class="p">:</span><span class="w"> </span><span class="s2">"browserify main.js -o scripts.js"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>This will allow you to use <code class="highlighter-rouge">npm run bundle</code> from the command line, and will output a <code class="highlighter-rouge">scripts.js</code> file.</p>
+
+<p>First, however, you have to install the required modules -</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>npm i --save-dev browserify jQuery
+</code></pre>
+</div>
+
+<p>This will install the requirements for this simple test. After that completes, I created a <code class="highlighter-rouge">main.js</code> file. Remember the script in npm? It’s looking for main.js - you can change the script to be any name - just make sure they match.</p>
+
+<p>In my main.js file - I did just a quick script to see if it was working -</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">$</span> <span class="o">=</span> <span class="nx">jQuery</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'jquery'</span><span class="p">);</span>
+
+<span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'This is working.'</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre>
+</div>
+
+<p>When <code class="highlighter-rouge">npm run bundle</code> gets called on the command line - it will take this file, and it’s recursive dependencies, and output them to <code class="highlighter-rouge">scripts.js</code>.  You can then minify this file to save space, but for now I’m skipping that.  At this point, I opened my <code class="highlighter-rouge">scripts.js</code> file, copied the entire file, and pasted into my static resource <code class="highlighter-rouge">AppScripts</code>, and saved it.</p>
+
+<p>I previewed the application in the browser, and my console log showed the text appropriately. I have tried a few other simple tests, and so far, everything appears to load properly and execute.</p>
+
+<h3 id="so-whats-next">So What’s Next</h3>
+<p>Now I’m going to go nuts. So many things I want to try out and see if they will work.  It’s not that the current framework is limiting, but it’s a restriction not having some go-to libraries. I don’t want to reinvent modules that exist, so any way I can get this to work, I’m going to make it happen.</p>
+
+<p>Some ideas to try - bootstrap js components, data grids, knockout, handlebars, and so on. What I have yet to determine is what is available to me at run time.  Some of the controller js will need to be tested - can I use my Browserify bundle to run controller code? No clue - this may not even work at all - I was just excited to get this to work - I had to share.</p>
+
+
+
+
+
+<div id="disqus_thread"></div>
+   <script type="text/javascript">
+       /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+       var disqus_shortname = 'kellyjandrews'; // required: replace example with your forum shortname
+       var disqus_title = "Lightning Components and Browserify";
+       /* * * DON'T EDIT BELOW THIS LINE * * */
+       (function() {
+           var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+           dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+           (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+       })();
+   </script>
+   <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+</div>
+
+</div>
+
+    </div>
+
+    <footer class="text-center">
+    <small>All content copyright <a href="/">kelly j andrews</a> &copy; 2016 &bull; All rights reserved.</small>
+    </a>
+</footer>
+
+    <script>
+    (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function() {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-47461674-1', 'kellyjandrews.com');
+    ga('send', 'pageview');
+</script>
+</body>
+
+</html>

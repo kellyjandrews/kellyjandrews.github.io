@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>kellyjandrews</title>
+    <link rel='stylesheet' href='/assets/css/styles.css' type='text/css' media='all' />
+    <script src="/assets/js/bundle.js"></script>
+    <link rel="alternate" type="application/rss+xml" title="kellyjandrews" href="/rss/">
+    <link rel="canonical" href="http://kellyjandrews.com/" />
+</head>
+
+
+<body>
+  <nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="row">
+    <div class="col-md-6">
+      <header class="site-header">
+        <h1>
+            <a href="/" title="kellyjandrews">kelly j andrews</a>
+        </h1>
+    </header>
+</div>
+    <div class="col-md-6 text-right">
+      <a href="/experience" class="navlink"><i class="fa fa-info-circle fa-2x"></i></a>
+      <a href="https://github.com/kellyjandrews" target="_blank"><i class="fa fa-github fa-2x"></i></a>
+      <a href="https://twitter.com/kellyjandrews" target="_blank" ><i class="fa fa-twitter fa-2x"></i></a>
+      <a href="https://www.linkedin.com/in/kjandrews/en" target="_blank" ><i class="fa fa-linkedin fa-2x"></i></a>
+      <a href="https://stackexchange.com/users/2222625/kelly-j-andrews" target="_blank"><i class="fa fa-stack-exchange fa-2x"></i></a>
+  </div>
+  </div>
+  </div>
+</nav>
+
+
+    <div class="container-fluid">
+        <div class="padded">
+	<div class="col-md-8 col-md-offset-2">
+  <h1>Improving My Workflow</h1>
+<p>Sometimes I wonder how I have missed things.  Bash sripting and the <code class="highlighter-rouge">.bash_(whatever)</code> files are one of those that I have heard about and never played with… whoops - my bad.  For those of you who are using it and using it effectively, you will probably nod your head when I say - I should have done this years ago.</p>
+
+<p>Never-the-less - here we are. What’s a bash script, and what is the <code class="highlighter-rouge">.bash_profile</code>? Bash is defined on <a href="http://en.wikipedia.org/wiki/Bash_(Unix_shell)">Wikipedia</a> as “ a command processor, typically run in a text window, allowing the user to type commands which cause actions.” Ok cool - I can handle that. <code class="highlighter-rouge">.bash_profile</code> is a shell script that automatically runs when you open terminal.</p>
+
+<p>I code on a Mac, so I’m speaking from that point of view, but most of this should also work on most Linux flavors.</p>
+
+<p>So how do you get started?  First you probably want to just find the <code class="highlighter-rouge">.bash_profile</code> file, and be able to edit it. Fire up a terminal and type:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>open -e ~/.bash_profile
+</code></pre>
+</div>
+
+<p>Consider this your first bash script.  <code class="highlighter-rouge">open</code> will open up an application and if you pass in a file name, it will open that as well.</p>
+
+<p>Don’t go about just changing things in here quite yet, though. Most of this is added for things to actually work as expected.  The <code class="highlighter-rouge">PATH</code> item is a list of all the folders your terminal has access to from anywhere.  The folders are seperated by a colon.  You can add folders here, just be sure to not delete any unless you know it’s something you don’t need. It can wreck your day.</p>
+
+<p>What we are going to do here, is add a line to load up a file that will get created in a bit. At the top of <code class="highlighter-rouge">.bash_profile</code>, add the following:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="o">[[</span> -f ~/.bashrc <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nb">source</span> ~/.bashrc
+</code></pre>
+</div>
+
+<p>Now we are starting to get a little crazy. So what is this doing?  The <code class="highlighter-rouge">[[]]</code> is an if shortcut. So the line is a conditional, and a full list of the flags available are <a href="http://tldp.org/LDP/Bash-Beginners-Guide/html/sect_07_01.html">here</a>. This particular call uses <code class="highlighter-rouge">-f</code> and is going to return true if the file exists.  The <code class="highlighter-rouge">&amp;&amp;</code> is the command to run when the conditional is true. <code class="highlighter-rouge">Source</code> is a command you run in terminal to add the file in memory so you can use it. You may/may not have a <code class="highlighter-rouge">~/.bashrc</code> file created. If you do - change the name to something else. Then, create that particular file.</p>
+
+<p>In the file we just created, let’s try to add something that will actually perform a task. Open up the <code class="highlighter-rouge">~/.bashrc</code> and add the following two lines:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="nb">alias </span><span class="nv">bashrc</span><span class="o">=</span><span class="s2">"open -e ~/.bashrc"</span>
+<span class="nb">alias </span><span class="nv">sb</span><span class="o">=</span><span class="s2">". ~/.bashrc"</span>
+</code></pre>
+</div>
+
+<p>Save the file, and get back to the command prompt. Now type in <code class="highlighter-rouge">. ~/.bashrc</code>.  In case of confusion - let me explain what we just did.</p>
+
+<p>Bash allows for a command called <code class="highlighter-rouge">alias</code> to basically create a short cut.  In our case, we made one that opens our <code class="highlighter-rouge">.bashrc</code>, and the second sources it.  What is the <code class="highlighter-rouge">source</code> command?  It’s something that runs when you open terminal. I don’t always want to close it and open it if I make a change.  So you run the command as either <code class="highlighter-rouge">source</code> or <code class="highlighter-rouge">.</code>.  We just did that as well with <code class="highlighter-rouge">sb</code> for source bash, so our new aliases are available.</p>
+
+<p>Go ahead and type in <code class="highlighter-rouge">bashrc</code> and start editing. You can add all kinds of great aliases for constant bash commands you are running - like npm or git.  For example I use:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="nb">alias </span><span class="nv">npmsave</span><span class="o">=</span><span class="s2">"npm install </span><span class="nv">$1</span><span class="s2"> --save-dev"</span>
+</code></pre>
+</div>
+
+<p>We have already seen most of this, except for the <code class="highlighter-rouge">$1</code>.  This is a reference to what you pass in as a parameter to the alias.  Now you need to type <code class="highlighter-rouge">sb</code> to source your <code class="highlighter-rouge">.bashrc</code> file.  You may be wondering why we didn’t use <code class="highlighter-rouge">source</code> as the alias.  I tried that, and had a bad day - don’t use bash functions as aliases or you will loose your functions.  You can get them back - but I’m not going to tell you how so you don’t even try it :)</p>
+
+<p>Once you have sourced your file, go to a folder with a <code class="highlighter-rouge">package.json</code> file, and type in <code class="highlighter-rouge">npmsave express</code>.  Boom! New package installed, and saved in your config.</p>
+
+<p>Hopefully after this you can see how great bash commands can make your workflow - they have helped out mine. I wish I had started sooner!</p>
+
+
+
+
+
+<div id="disqus_thread"></div>
+   <script type="text/javascript">
+       /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+       var disqus_shortname = 'kellyjandrews'; // required: replace example with your forum shortname
+       var disqus_title = "Improving My Workflow";
+       /* * * DON'T EDIT BELOW THIS LINE * * */
+       (function() {
+           var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+           dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+           (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+       })();
+   </script>
+   <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+</div>
+
+</div>
+
+    </div>
+
+    <footer class="text-center">
+    <small>All content copyright <a href="/">kelly j andrews</a> &copy; 2016 &bull; All rights reserved.</small>
+    </a>
+</footer>
+
+    <script>
+    (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function() {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-47461674-1', 'kellyjandrews.com');
+    ga('send', 'pageview');
+</script>
+</body>
+
+</html>

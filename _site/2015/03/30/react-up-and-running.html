@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>kellyjandrews</title>
+    <link rel='stylesheet' href='/assets/css/styles.css' type='text/css' media='all' />
+    <script src="/assets/js/bundle.js"></script>
+    <link rel="alternate" type="application/rss+xml" title="kellyjandrews" href="/rss/">
+    <link rel="canonical" href="http://kellyjandrews.com/" />
+</head>
+
+
+<body>
+  <nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="row">
+    <div class="col-md-6">
+      <header class="site-header">
+        <h1>
+            <a href="/" title="kellyjandrews">kelly j andrews</a>
+        </h1>
+    </header>
+</div>
+    <div class="col-md-6 text-right">
+      <a href="/experience" class="navlink"><i class="fa fa-info-circle fa-2x"></i></a>
+      <a href="https://github.com/kellyjandrews" target="_blank"><i class="fa fa-github fa-2x"></i></a>
+      <a href="https://twitter.com/kellyjandrews" target="_blank" ><i class="fa fa-twitter fa-2x"></i></a>
+      <a href="https://www.linkedin.com/in/kjandrews/en" target="_blank" ><i class="fa fa-linkedin fa-2x"></i></a>
+      <a href="https://stackexchange.com/users/2222625/kelly-j-andrews" target="_blank"><i class="fa fa-stack-exchange fa-2x"></i></a>
+  </div>
+  </div>
+  </div>
+</nav>
+
+
+    <div class="container-fluid">
+        <div class="padded">
+	<div class="col-md-8 col-md-offset-2">
+  <h1>React - Up and Running</h1>
+<h2 id="fashionably-late">Fashionably Late</h2>
+<p>I always seem late to the party. I was late getting into Node.js, and then Ember &amp; Angular. I played with ruby well after it was the hot topic, and I went straight to Gulp after only a short time with Grunt. And per the usual, just a couple weeks ago I started trying <a href="https://facebook.github.io/react/">React</a>. This party is just getting warmed up.</p>
+
+<p>Learning frameworks for me has always been difficult.  I tend to lean towards the anti-framework models of straight PHP, or Rails-less ruby.  However, trying React, something clicked. I mean, I actually get what it’s trying to do, and the understanding happened quickly.</p>
+
+<p>Using the <a href="https://facebook.github.io/react/docs/getting-started.html">getting started</a> tutorial provided by Facebook, I was able to instantly see the results:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"https://cdnjs.cloudflare.com/ajax/libs/react/0.13.1/react.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"https://cdnjs.cloudflare.com/ajax/libs/react/0.13.1/JSXTransformer.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"example"</span><span class="nt">&gt;&lt;/div&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/jsx"</span><span class="nt">&gt;</span>
+      <span class="nx">React</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span>
+        <span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="nx">Hello</span><span class="p">,</span> <span class="nx">world</span><span class="o">!&lt;</span><span class="sr">/h1&gt;</span><span class="err">,
+</span>        <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">'example'</span><span class="p">)</span>
+      <span class="p">);</span>
+    <span class="nt">&lt;/script&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre>
+</div>
+
+<p>Open <code class="highlighter-rouge">index.html</code> in a browser, and it’s already working.</p>
+
+<h2 id="data-problems">99 Data Problems</h2>
+<p>Rendering html in this way is super simple, and doesn’t really get into the power of React. Then I started working with data, and that’s where I started to really see things make sense.  Granted, it took a second to understand the one-directional data flow, but it was literally only a second. You just have to learn to <a href="http://facebook.github.io/react/docs/thinking-in-react.html">think in react</a>.</p>
+
+<p>In order to not only better understand what’s going on myself, but to also help other developers getting started, I’m going to write a few blog posts to dive into React piece by piece, and at the end, end up with a finished product that would be useful.</p>
+
+<h2 id="the-plan">The Plan</h2>
+<p>Let’s build a data grid.  The concept isn’t anything unusual, and it’s useful in any UI project you might work on.  I’ll break down components bit by bit, and at the end, we will have a finished, reusable component.  We’ll laugh, cry, and learn together a bit more about React, and it’s inner workings.</p>
+
+<p>The first step is, I want to think about how the finished product will work. For that, I turn to <a href="https://balsamiq.com/">Balsamiq</a> to create a quick mockup that details exactly what I want.</p>
+
+<p><img src="../../../assets/images/data_grid_mockup.png" class="img-responsive" /></p>
+
+<p>There are three components that will be working together here:
+1. Title Bar - it will contain the data grid title, and a filter component to search the data.
+2. Data Grid - this will display the data headers, allow for sorting, and display the data.
+3. Pagination - we also need something to show a few options, and eventually page through data results.</p>
+
+<p>It’s a straight forward example, but I think it has enough going on to make it really useful.</p>
+
+<h2 id="initial-mockup">Initial Mockup</h2>
+<p>The first place to start is a static mockup.  I’m actually going to mock this up using components, so we can begin to think about how the pieces fit together. We will build several pieces that will ultimately be data driven - and we will use some build tools to make everything a bit easier to work with. For now - I will keep this in one file, <code class="highlighter-rouge">index.html</code>.</p>
+
+<h3 id="capitalization-counts">Capitalization Counts!</h3>
+<p>When building out our mockup, we will be creating a few components.  It is important to note some syntax that is vital to getting these to work.</p>
+
+<p>Each class needs to be a capitalized.  In other words, <code class="highlighter-rouge">&lt;DataGrid /&gt;</code> is what we are looking for. <code class="highlighter-rouge">&lt;dataGrid /&gt;</code> will not work properly.</p>
+
+<h3 id="the-components">The Components</h3>
+<p>We will get to really splitting these components apart in a later tutorial, but first - there are three main components, and I will stub out those items so we can get the everything moving.</p>
+
+<h4 id="data-grid">Data Grid</h4>
+<p>First, let’s make a component that houses everything together, and call it <code class="highlighter-rouge">DataGrid</code>.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">DataGrid</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">createClass</span><span class="p">({</span>
+  <span class="na">render</span><span class="p">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span>
+      <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
+        <span class="nx">Hello</span><span class="p">,</span> <span class="nx">Data</span> <span class="nx">Grid</span><span class="o">!</span>
+      <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</code></pre>
+</div>
+
+<p>Notice the capitalization? The first character  must be a capital. I tend to like more camel casing, so I also capitalize the G, but it’s not a requirement.</p>
+
+<p>Second item to notice - <code class="highlighter-rouge">React.createClass({})</code>.  <code class="highlighter-rouge">createClass()</code> is what tells React that we are building a component.  It takes an object as a property. That object contains various functions that will perform the different tasks we need later, like filtering or paging.  For now, it only contains the function <code class="highlighter-rouge">render</code>.  This indicates what will eventually be rendered into the DOM.</p>
+
+<p>I’m purposefully going to avoid what React is doing behind the scenes. Just know that the <code class="highlighter-rouge">JSXTransformer.js</code> file is required, and it’s turning the XML markup in the render function into JSON objects. For now - we don’t need to get any deeper than that.</p>
+
+<p>One last item to note - the text is wrapped in a <code class="highlighter-rouge">&lt;div&gt;</code> tag.  React will error without a wrapper element. In other words, you have to have everything returned in between an open and close tag.  Anything else will cause your components to not render.</p>
+
+<p>Now that I have my main component <code class="highlighter-rouge">DataGrid</code> set up, I render it into a <code class="highlighter-rouge">&lt;div&gt;</code> on the page.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="nx">React</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span>
+  <span class="o">&lt;</span><span class="nx">DataGrid</span> <span class="o">/&gt;</span><span class="p">,</span>
+  <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">'dataGrid'</span><span class="p">)</span>
+<span class="p">);</span>
+</code></pre>
+</div>
+
+<p>Now, let’s make the <code class="highlighter-rouge">DataGrid</code> hold other components inside.</p>
+
+<h4 id="title-bar-data-table-pagination">Title Bar, Data Table, Pagination</h4>
+
+<p>I’m going to start out really simple here, and just render some text.  We can go back build out markup later.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">TitleBar</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">createClass</span><span class="p">({</span>
+  <span class="na">render</span><span class="p">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span>
+      <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
+        <span class="nx">Title</span> <span class="nx">Bar</span>
+      <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="kd">var</span> <span class="nx">DataTable</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">createClass</span><span class="p">({</span>
+  <span class="na">render</span><span class="p">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span>
+      <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
+        <span class="nx">Data</span> <span class="nx">Table</span>
+      <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="kd">var</span> <span class="nx">Pagination</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">createClass</span><span class="p">({</span>
+  <span class="na">render</span><span class="p">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span>
+      <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
+        <span class="nx">Pagination</span>
+      <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</code></pre>
+</div>
+
+<p>These will eventually hold all the markup we need to get our static mockup completed. What we need to do at this point, however, is add these to our <code class="highlighter-rouge">DataGrid</code> component, because just adding them doesn’t do anything. Let’s modify the <code class="highlighter-rouge">DataGrid</code> to look like so:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">DataGrid</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">createClass</span><span class="p">({</span>
+  <span class="na">render</span><span class="p">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span>
+      <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">TitleBar</span> <span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="nx">DataTable</span> <span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="nx">Pagination</span> <span class="o">/&gt;</span>
+      <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</code></pre>
+</div>
+
+<p>Now our text from each component is rendered where the <code class="highlighter-rouge">&lt;ComponentName /&gt;</code> is listed, and as before, wrapped in a container <code class="highlighter-rouge">&lt;div&gt;</code>.</p>
+
+<h3 id="making-it-look-real">Making it look real</h3>
+<p>I like using <a href="http://getbootstrap.com/">Bootstrap</a>, so I ended up using it here as well. There is a <a href="http://react-bootstrap.github.io/">React-Bootstrap</a> library as well, and I may find a spot to use it. For now, I’ll keep it simple. One item that has to be mentioned - <a href="https://facebook.github.io/react/docs/tags-and-attributes.html">html properties</a> are not 1:1 transfers in React.  Most notably - <code class="highlighter-rouge">class</code> is actually <code class="highlighter-rouge">className</code>. This is important during the process of adding Bootstrap.  If your page doesn’t render, open the console, and React does a great job of indicating where <code class="highlighter-rouge">class</code> should be <code class="highlighter-rouge">className</code>.</p>
+
+<p>I took the liberty of building out the rest on my own to give it more of a final look and feel. Since this isn’t really about designing with Bootstrap, I won’t cover all of those steps here.</p>
+
+<h2 id="source-code-and-next-steps">Source Code and Next Steps</h2>
+<p>This is by all means not a perfect mock-up. There are a few items I’m just not happy with yet, but I’ll continue to tweak in future posts, as we dive into each component directly.</p>
+
+<p>I’ve created a <a href="https://github.com/kellyjandrews/react-tutorial/tree/static-mockup">GitHub repo</a> with the source code, and I’ll be adding to it as I create more tutorials.  You can clone what I have so far in your desktop, and run it in your browser.</p>
+
+<p>The next steps will be to set up a workflow to begin separating files, building out the data flow, making things more interactive, and eventually making this use live data and dropping it into a real application.</p>
+
+
+
+  <h4>React Data Grid Tutorials</h4>
+  <ol>
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      
+      <li class="active">React - Up and Running</li>
+      
+    
+  
+    
+      
+      <li><a href="/2015/04/01/modular-react-components-with-browserify.html" title="Modular React Components With Browserify">Modular React Components With Browserify</a></li>
+      
+    
+  
+    
+      
+      <li><a href="/2015/04/08/data-driven-react-components.html" title="Data Driven React Components">Data Driven React Components</a></li>
+      
+    
+  
+    
+  
+    
+      
+      <li><a href="/2015/04/13/react-component-communication.html" title="React Component Communication">React Component Communication</a></li>
+      
+    
+  
+    
+      
+      <li><a href="/2015/04/20/refactoring-react-data-grid.html" title="Refactoring React Data Grid">Refactoring React Data Grid</a></li>
+      
+    
+  
+    
+      
+      <li><a href="/2015/04/21/data-filtering-for-react.html" title="Data Filtering for React">Data Filtering for React</a></li>
+      
+    
+  
+  </ol>
+
+
+
+<div id="disqus_thread"></div>
+   <script type="text/javascript">
+       /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+       var disqus_shortname = 'kellyjandrews'; // required: replace example with your forum shortname
+       var disqus_title = "React - Up and Running";
+       /* * * DON'T EDIT BELOW THIS LINE * * */
+       (function() {
+           var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+           dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+           (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+       })();
+   </script>
+   <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+</div>
+
+</div>
+
+    </div>
+
+    <footer class="text-center">
+    <small>All content copyright <a href="/">kelly j andrews</a> &copy; 2016 &bull; All rights reserved.</small>
+    </a>
+</footer>
+
+    <script>
+    (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function() {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-47461674-1', 'kellyjandrews.com');
+    ga('send', 'pageview');
+</script>
+</body>
+
+</html>
