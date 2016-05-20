@@ -28,6 +28,7 @@ collections: null
 markdown:    kramdown
 highlighter: rouge
 excerpt_separator: "<!-- more -->"
+permalink: date
 
 # Handling Reading
 exclude: ["less","gulp","node_modules","Gulpfile.js","package.json","scripts"]

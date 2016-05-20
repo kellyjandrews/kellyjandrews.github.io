@@ -14,7 +14,7 @@ The first step to get the search working, is to get the value of the search box 
 
 `TitleBar` doesn't make any sense, and the component is actually the `SearchBox`. I've made that change, and our search box component looks like this:
 
-```JSX
+```js
 /* searchbox.jsx */
 class SearchBox extends React.Component{
   constructor(props) {
