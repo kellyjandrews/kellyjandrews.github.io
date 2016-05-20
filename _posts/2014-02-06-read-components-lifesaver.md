@@ -11,7 +11,7 @@ Brunch, and it's reloader plugin, save me serious cycles - I simply save a page,
 ####The Brick Wall
 Brunch works great with Bower, in that it will automatically read all `bower.json` files in the `bower_components` folder, and append them into your `app.js` file. You can specify order etc, but it's fairly simple. Here is where I got stuck:
 
-{% highlight js %}
+```js
 {
   "name": "highcharts",
   "version": "3.0.7",
@@ -19,7 +19,7 @@ Brunch works great with Bower, in that it will automatically read all `bower.jso
   "dependencies": {
   }
 }
-{% endhighlight %}
+```
 
 The `main` file listed here is simply `highcharts.js`.  I wanted to use the `gauge` chart. Ugh - it's in a different file. This just wouldn't do. So I modified the `.bower.json` file and the `bower.json` file (I'm not positive which one brunch reads from, so I just did both) to use `./highcharts-all.js`. I recompiled, and voila - my chart worked.
 
@@ -31,13 +31,13 @@ Thank goodness [Paul Miller](https://github.com/paulmillr) and some other folks 
 
 So I installed it as an `npm` module, ran the install, and then removed my hack.  As expected, my chart failed.  I then added the following to my project's `bower.json` file:
 
-{% highlight js %}
+```js
 "overrides": {
   "highcharts": {
     "main": "highcharts-all.js"
   }
 }
-{% endhighlight %}
+```
 
 I restarted Brunch, and like magic - it all returned.
 

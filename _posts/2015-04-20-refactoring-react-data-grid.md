@@ -26,7 +26,7 @@ In this case, I initially wanted the lower level component to do very little fun
 ## State Of The State
 Currently the `state` for the `DataGrid` component looks like this:
 
-{% highlight js %}
+```js
 /* app.jsx */
 
 this.state = {
@@ -38,13 +38,13 @@ this.state = {
   page: props.page,
   pageOptions: this.getPageOptions(props.data.length, props.displayCount)
 };
-{% endhighlight %}
+```
 
 After giving these a hard look, several of these are just computed values - `count`, `pageOptions`, `itemStart` and `itemEnd` really should all be controlled at the time of render, and not stored in `state`. Each of these are based on `data`, `page`, and `displayCount`.
 
 If we dig a bit deeper, though, even `data` is computed. The `prop` data is immutable - so it never changes. The `state` data is our paginated data set. It's just a sliced array. If we remove the computed items, our state now looks like this:
 
-{% highlight js %}
+```js
 /* app.jsx */
 
 this.state = {
@@ -52,7 +52,7 @@ this.state = {
   displayCount: props.displayCount,
   searchTerm: props.searchTerm
 };
-{% endhighlight %}
+```
 
 This feels so much cleaner. `searchTerm` will come into play later when we get to the search component.
 
@@ -63,7 +63,7 @@ Since we basically killed our entire `state`, we need a place to get it.  Rememb
 
 Enter `class PagedData`. A static class in the `pagination.jsx` file that performs all of the computations needed (save a couple) to populate the `Pagination` component, and we expose it in a  `static` method. We can then pass in our data set, page and displayCount `state` and let the `Pagination` component take care of itself a bit more. It will also make the component reusable, without rewriting all of the functions somewhere else.
 
-{% highlight js %}
+```js
 /* pagination.jsx */
 class PagedData {
   constructor(d, o) {
@@ -100,11 +100,11 @@ class PagedData {
     return o;
   }
 }
-{% endhighlight %}
+```
 
 I split up the result to help the owner do it's job, allowing it to pass `paginatedProps` and `paginatedData` to the proper place. Our new class gets created by calling the following method with `Pagination.pageData()` and pass in the `data` array and our `state` object.
 
-{% highlight js %}
+```js
 /* app.jsx */
 render() {
   var paginated = Pagination.pageData(this.props.data, this.state);
@@ -117,11 +117,11 @@ static pageData(d, o) {
   return new PagedData(d,o);
 
 }
-{% endhighlight %}
+```
 
 I had to do some clean up for the values in `Pagination`, but that was fairly simple, and is in the new code set. One other item that needed cleaning up, is correcting the current page when the `displayCountOptions` change.  That gets moved to a component lifecycle method.
 
-{% highlight js %}
+```js
 componentWillUpdate(nextProps) {
   if (this.props.paginatedProps.total !== nextProps.paginatedProps.total) {
     this.props.onChange({'page' : 1});
@@ -133,23 +133,23 @@ componentWillUpdate(nextProps) {
     this.props.onChange({'page' : i});
   }
 }
-{% endhighlight %}
+```
 
 `componentWillUpdate` and `componentDidUpdate` are pretty powerful when used correctly. I dare you to `this.setState()` from one of these... ok I don't mean that. Loops are never fun - so avoid this.
 
 Now to call our component, we simply need this -
 
-{% highlight html %}
+```html
 <Pagination
   paginatedProps={paginated.paginatedProps}
   onChange={this.handleData}
 />
-{% endhighlight %}
+```
 
 ###Handling the Change Events
 In preparing for search, I originally modified the "handlePagination()" method, to simplify the interaction. Then I realized, the method wasn't even required, and could be bypassed altogether.
 
-{% highlight js %}
+```js
 /* app.jsx */
 //before
 handlePagination(setting) {
@@ -182,7 +182,7 @@ handlePagination(setting) {
   onChange={this.setState.bind(this)}
 />
 
-{% endhighlight %}
+```
 
 Now any thing from an `onChange` event can be handled the same way - by performing `setState` which forces a refresh, calling the `PageData` method, and everything is up-to-date. Since my low level components and `DataGrid` all play well together - I don't even need the function I originally created. Refactor #FTW!
 
@@ -190,14 +190,14 @@ Now any thing from an `onChange` event can be handled the same way - by performi
 One last item to cover, then we can move on. When you are looking for properties in a component, you need to make sure those are set in it's owner so those are available. However, if those aren't included you get errors and such - and sometimes that's actually avoidable because the property could have a default value.  React allows for `defaultProps` to be set up. I created those like this:
 
 
-{% highlight js %}
+```js
 DataGrid.defaultProps = {
   data: [],
   displayCount: 10,
   page: 1,
   searchTerm: ""
 }
-{% endhighlight %}
+```
 
 Now when I want to use this component, I can pass in `<DataGrid />` and not blow it up. With this method, I could render the `DataGrid` without any data, and pass it in later. I can also pass in a page, or search term if I have one stored.  This makes our components more flexible to the end user.
 

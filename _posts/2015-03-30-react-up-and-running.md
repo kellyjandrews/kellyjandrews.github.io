@@ -11,7 +11,7 @@ Learning frameworks for me has always been difficult.  I tend to lean towards th
 
 Using the [getting started](https://facebook.github.io/react/docs/getting-started.html) tutorial provided by Facebook, I was able to instantly see the results:
 
-{% highlight html %}
+```html
 <!DOCTYPE html>
 <html>
   <head>
@@ -28,7 +28,7 @@ Using the [getting started](https://facebook.github.io/react/docs/getting-starte
     </script>
   </body>
 </html>
-{% endhighlight %}
+```
 
 Open `index.html` in a browser, and it's already working.
 
@@ -66,7 +66,7 @@ We will get to really splitting these components apart in a later tutorial, but 
 #### Data Grid
 First, let's make a component that houses everything together, and call it `DataGrid`.  
 
-{% highlight js %}
+```js
 var DataGrid = React.createClass({
   render: function() {
     return (
@@ -76,7 +76,7 @@ var DataGrid = React.createClass({
     );
   }
 });
-{% endhighlight %}
+```
 
 Notice the capitalization? The first character  must be a capital. I tend to like more camel casing, so I also capitalize the G, but it's not a requirement.  
 
@@ -88,12 +88,12 @@ One last item to note - the text is wrapped in a `<div>` tag.  React will error 
 
 Now that I have my main component `DataGrid` set up, I render it into a `<div>` on the page.
 
-{% highlight js %}
+```js
 React.render(
   <DataGrid />,
   document.getElementById('dataGrid')
 );
-{% endhighlight %}
+```
 
 Now, let's make the `DataGrid` hold other components inside.
 
@@ -101,7 +101,7 @@ Now, let's make the `DataGrid` hold other components inside.
 
 I'm going to start out really simple here, and just render some text.  We can go back build out markup later.
 
-{% highlight js %}
+```js
 var TitleBar = React.createClass({
   render: function() {
     return (
@@ -131,11 +131,11 @@ var Pagination = React.createClass({
     );
   }
 });
-{% endhighlight %}
+```
 
 These will eventually hold all the markup we need to get our static mockup completed. What we need to do at this point, however, is add these to our `DataGrid` component, because just adding them doesn't do anything. Let's modify the `DataGrid` to look like so:
 
-{% highlight js %}
+```js
 var DataGrid = React.createClass({
   render: function() {
     return (
@@ -147,7 +147,7 @@ var DataGrid = React.createClass({
     );
   }
 });
-{% endhighlight %}
+```
 
 Now our text from each component is rendered where the `<ComponentName />` is listed, and as before, wrapped in a container `<div>`.  
 

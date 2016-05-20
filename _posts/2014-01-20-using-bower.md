@@ -13,18 +13,18 @@ First, you need to have `node.js` and `npm` installed on your machine already.  
 
 After you have those requirements, it get easier. First, install the package:
 
-{% highlight console %}
+```shell
 (sudo) npm install -g bower
-{% endhighlight %}
+```
 
 When that completes, you can always run `bower help` to get more information.
 
 Some of these feature, you may never use, but my favorite is the `bower search` feature.  There are so many packages out there, it's hard to know where to begin.
 
 Type in:
-{% highlight console %}
+```shell
 bower search jquery
-{% endhighlight %}
+```
 
 
 See what I mean? You can search right in your terminal. Another method to look for them has been presented by [Sindre Sorhus](https://github.com/sindresorhus) and you can [find it here](http://sindresorhus.com/bower-components/). It is a great search tool that is nicely laid out. Either way, you will be searching for your packages to get the proper name, so `Bower` knows what to install.
@@ -32,9 +32,9 @@ See what I mean? You can search right in your terminal. Another method to look f
 #### Installing Packages
 Speaking of install, let's do that now.
 
-{% highlight console %}
+```shell
 bower install jquery
-{% endhighlight %}
+```
 
 
 This command installs the latest version of `jquery`, right in your project under the `bower_components` sub-directory. Looking at the folder, you will notice that it does install every file from `jquery`.  This isn't too many here, but in some cases, there are a ton of files. For now, don't worry about that too much, and we can attack that later.
@@ -45,44 +45,44 @@ Using the `bower install` function for every library can get tedious, and really
 
 Go ahead and run in your terminal
 
-{% highlight console %}
+```shell
 bower init
-{% endhighlight %}
+```
 
 Follow the prompts, you can hit enter for default, or fill out the info, your choice.
 
 This process creates a file named `bower.json`.  This is where the magic happens. Let's say you want to also add [Bootstrap](http://getbootstrap.com/) to you project.
 
-{% highlight console %}
+```shell
 bower install bootstrap --save
-{% endhighlight %}
+```
 
 Now take a look at your `bower.json` file, and take note of the `dependencies` section.
 
-{% highlight js %}
+```js
 "dependencies": {
   "jquery": "~2.0.3",
   "bootstrap": "~3.0.3"
 }
-{% endhighlight %}
+```
 
 Now both `jquery` and `bootstrap` are listed as dependencies, and `bootstrap` is listed in your `bower_components` folder.  At this point, go ahead and delete this folder (leaving the `bower.json` file) and type in:
 
-{% highlight console %}
+```shell
 bower install
-{% endhighlight %}
+```
 
 Awesome - everything comes right back and installs with no problem. Now what if you aren't on the internet?
 
-{% highlight console %}
+```shell
 bower cache list
-{% endhighlight %}
+```
 
 They thought of this too, and now there is a cache of your previous installs.  You can wipe this out using
 
-{% highlight console %}
+```shell
 bower cache clean
-{% endhighlight %}
+```
 
 #### Versioning
 
@@ -92,10 +92,10 @@ At this point, it makes sense to explain a little further the verion numbers and
 
 Let's say your project MUST have `jquery` v 1.9.1, then in your `bower.json` file, use
 
-{% highlight js %}
+```js
 "jquery": "1.9.1"
 bower install
-{% endhighlight %}
+```
 
 Now if you look in your `bower_components` folder, and check out the `jquery.js` file, you will see it is indeed not version 1.9.1.  
 
@@ -106,22 +106,22 @@ This is where the power is, and the huge time saver.  I've spent hours trying to
 #### But wait - there's more!
 Now that you are getting your libraries the easy way, what if your application structure looks like this:
 
-{% highlight console %}
+```shell
 app
 |--vendor
 |--css
 |--scripts
 |--index.html
 |--bower.json
-{% endhighlight %}
+```
 
 And you don't want to reference `bower_components`.  You don't have to with the `.bowerrc` file and some configuration options. Create the file, and add:
 
-{% highlight js %}
+```js
 {
   "directory": "vendor"
 }
-{% endhighlight %}
+```
 
 Voila - now it fits a little better with your specific app layout.  There is a ton more you can do with the config file, but this is probably the most important for you to use.
 

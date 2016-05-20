@@ -13,9 +13,9 @@ The next logical step is to break our files up, and then introduce a simple buil
 ## Getting The Requirements
 Since we are adding some requirements to the build process, the first step is to get `npm` going. If you need to [install npm and node](https://docs.npmjs.com/getting-started/installing-node), do that now.
 
-{% highlight bash%}
+```shell```
 npm init
-{% endhighlight %}
+```
 
 From here, just follow the prompts, until the `package.json` file is built for you. Now we need a few packages to get things moving.
 
@@ -38,9 +38,9 @@ We could continue to include this from the CDN, but I'm going to move it locally
 
 That covers it - now we save these as development dependencies:
 
-{% highlight bash %}
+```bash
 npm i --save-dev react bootstrap jquery vinyl-source-stream gulp browserify babelify browser-sync
-{% endhighlight %}
+```
 
 ## Building the Build File
 Now that we have all the pieces, let's build out the process. The first step we need is our `Gulpfile.js`.  I often make this a more modular, which you can see in the source code of this blog, but for this project, I'm going to keep it all in one spot.
@@ -49,7 +49,7 @@ Now that we have all the pieces, let's build out the process. The first step we 
 Bootstrap, jQuery, and React are not going to change while I'm developing. They may change, but not every time I save my files. It takes extra time to bundle these, so the first thing I want to do is create a bundle with just these libraries, that way I'm only rebuilding my data grid files when saving.
 
 
-{% highlight js %}
+```js
 var vendors = [
   'react',
   'bootstrap',
@@ -68,23 +68,23 @@ gulp.task('vendors', function () {
 
     return stream;
 });
-{% endhighlight %}
+```
 
 I create an array with the vendors I want to include. I then pull these into a gulp task and bundle them.  The output is the `vendors.js` file in my build directory.  This works for now - but you can eventually watch for production vs development environments and minify accordingly. I'm keeping it simple for the moment to make the process clearer.
 
-{% highlight bash %}
+```bash
 $ gulp vendors
 Using gulpfile ~/Apps/react-tutorial/Gulpfile.js
 Starting 'vendors'...
 Finished 'vendors' after 15 ms
-{% endhighlight %}
+```
 
 `vendor.js` file now shows up in the `build/js` directory.
 
 ### App Files
 Now we need to create some new folders for our `jsx` files to be stored. I made an app folder, and created an `app.jsx` file.  `app.jsx` will require the additional files needed to run the data grid. I'll show you how that's set up in a bit. First, let's look at the gulp task.
 
-{% highlight js %}
+```js
 gulp.task('app', function () {
     var stream = browserify({
             entries: ['./app/app.jsx'],
@@ -102,24 +102,24 @@ gulp.task('app', function () {
                  .pipe(source('data-grid.js'))
                  .pipe(gulp.dest('build/js'));
 });
-{% endhighlight %}
+```
 
 This is very similar to the vendor task, but I add a couple of items that need to be explained. I add the `entries`, `transform`, `extensions`, and `fullPaths` properties to the stream. This tells Browserify where my initial file is located, what transforms to perform - in this case Babelify (which is runnint the react transform), which extensions are valid, and not require the full path.  I then iterate over the `vendors` array and create external resources, so Browserify doesn't pull those into my `data-grid.js` file.
 
-{% highlight bash %}
+```bash
 $ gulp app
 Using gulpfile ~/Apps/react-tutorial/Gulpfile.js
 Starting 'app'...
 Finished 'app' after 15 ms
-{% endhighlight %}
+```
 
 Now that my static libs and app files are set up to build independently, I need to modify my index file to use those files.
 
-{% highlight html %}
+```html
 <script src="build/js/vendors.js"></script>
 ...
 <script src="build/js/data-grid.js"></script>
-{% endhighlight %}
+```
 
 I am leaving the Bootstrap css file as is for now, but we could easily move that into it's own gulp task and call it from a local place.
 
@@ -128,7 +128,7 @@ We are nearly there, just a couple more steps to really get this in a place that
 
 Let's first take a look at the `app.jsx` file, and how we are now using ES6 modules.
 
-{% highlight js %}
+```js
 import React from 'react';
 
 class DataGrid extends React.Component{
@@ -151,7 +151,7 @@ class DataGrid extends React.Component{
 };
 
 React.render(<DataGrid />, document.getElementById('dataGrid'));
-{% endhighlight %}
+```
 
 You will need to rerun `gulp app`.
 
@@ -159,7 +159,7 @@ If you haven't read up on using ES6, there is a [great tutorial](http://www.jayw
 
 The `app.jsx` file is still missing a few items to get it working. We have yet to import the additional components.  Let's start with the `TitleBar` component.
 
-{% highlight js %}
+```js
 import React from 'react';
 
 class TitleBar extends React.Component{
@@ -178,26 +178,26 @@ class TitleBar extends React.Component{
 };
 
 export default TitleBar;
-{% endhighlight %}
+```
 
 With some quick modifications - our `TitleBar` component is ready to be consumed by our `app.jsx` file. I already have made the other modules as well in a similar fashion, so now our `app.jsx` file starts with:
 
-{% highlight js %}
+```js
 import React from 'react';
 import TitleBar from './title-bar';
 import DataTable from './datatable';
 import Pagination from './pagination';
-{% endhighlight %}
+```
 
 #### Bootstrap and jQuery are Missing
 
 Even with all of this, Bootstrap and jQuery don't just automatically work. The best solution I currently have for this is to add the following just below the lines above in `app.jsx`.
 
-{% highlight js %}
+```js
 import jQuery from 'jquery';
 global.jQuery = jQuery;
 import bootstrap from 'bootstrap';
-{% endhighlight %}
+```
 
 This feel terribly wrong to me - but I know it works.  I hate using the global variable, and eventually I will land on the right combination to resolve this, and get it sorted. For now. This is what I have.
 
@@ -208,16 +208,16 @@ Now that we have gotten this far, there is one last step - auto reloading when w
 
 So let's use Gulp to do that for us, by watching for changes, and running it automatically.
 
-{% highlight js %}
+```js
 gulp.task('watch', ['app'], function () {
   gulp.watch(['./app/**/*.jsx'], ['app'])
 });
-{% endhighlight %}
+```
 
 This is super simple - watch all `.jsx` files, and run the `app` task when they change. Now it's reloading without our manual input.
 
 One last automation step, and we can call it a day.
-{% highlight js %}
+```js
 gulp.task('browsersync',['vendors','app'], function () {
     browserSync({
   		server: {
@@ -227,17 +227,17 @@ gulp.task('browsersync',['vendors','app'], function () {
   		browser: ["google chrome"]
 	});
 });
-{% endhighlight %}
+```
 
 This allows us to fire up a testing server, and loads a browser window when we run it. I include the `vendor` and `app` gulp task here to ensure they are complete prior to starting the server. I then slightly modify my `watch` task, and add a `default` task to run using `gulp`.
 
-{% highlight js %}
+```js
 gulp.task('watch', [], function () {
   gulp.watch(['./app/**/*.jsx'], ['app', browserSync.reload]);
 });
 
 gulp.task('default',['browsersync','watch'], function() {});
-{% endhighlight %}
+```
 
 Now when I run `gulp`, a browser window opens with the app running.  Modify any of the `.jsx` files, and it reloads automatically.
 

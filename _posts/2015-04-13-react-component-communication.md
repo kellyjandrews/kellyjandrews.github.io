@@ -25,7 +25,7 @@ The goal is to manage these data points in the top-level, and then pass them dow
 ## Initial Changes
 The first step is to get the data to the top level from the two dropdowns for display count and current page. Since we are building components, it made sense to add a new component named `DropDownMenu` and render it in the `Pagination` component.
 
-{% highlight js %}
+```js
 /* pagination.jsx */
 class DropDownMenu extends React.Component {
   render() {
@@ -46,17 +46,17 @@ class DropDownMenu extends React.Component {
     );
   }
 };
-{% endhighlight %}
+```
 
 If you read the previous post in the series, this should look somewhat familiar. The `DropDownMenu` controller will need some options passed to it as an array, and then we map the array to out put our `<li>`s to be rendered to the UI, and the current value that is set.
 
-{% highlight html %}
+```html
 <DropDownMenu value="Current Value" options=["Current Value", "Another Value"] />
-{% endhighlight %}
+```
 
 So far, we are only using the `render()` method. We need to add some handler to the `<a>` tag to pass back what has been selected.
 
-{% highlight js %}
+```js
 /* pagination.jsx */
 class DropDownMenu extends React.Component {
   handleClick(key) {
@@ -69,7 +69,7 @@ class DropDownMenu extends React.Component {
       )
     }, this)
     return(...
-{% endhighlight %}
+```
 
 Adding a `handleClick()` method to the class, we now have the ability to capture which option was selected, and then do something with that information. We grab where the click took place by adding `onClick={this.handleClick.bind(this, key)` to each anchor tag.  `This` for each option in the drop down represents the current `DropDownMenu` component, and finds the option by it's `key` and logs the option to the console. The final `}, this)` binds the class to the map function to make it aware of the current class methods.
 
@@ -77,13 +77,13 @@ Notice we are now using an `onChange` function from `props`. This is a simple wa
 
 For now, modify how these are called in `Pagination`:
 
-{% highlight html %}
+```html
 ...
 <DropDownMenu value={1} options={[1,2,3,4,5,6,7,8,9,10]} />
 ...
 <DropDownMenu value={10} options={[10,25]} />
 ...
-{% endhighlight %}
+```
 
 I'm actually going to pass `props` later for the value and options, but for now this can be static. If you run the app now, you will get an error since we haven't passed in `onChange()` from the owner component. Let's do that now.
 
@@ -94,7 +94,7 @@ Much like `DropDownMenu`, `Pagination` doesn't need to do much more than report 
 
 First, let's take a look at the way we handle the selections bubbled up from the `DropDownMenu`.
 
-{% highlight js %}
+```js
 /* pagination.jsx */
 ...
 updateSettings(type, value) {
@@ -129,7 +129,7 @@ render() {
 }
 };
 
-{% endhighlight %}
+```
 
 This looks like a lot, but there actually isn't too much happening here. `DataGrid` will be sending down the `page` and `displayCount` as props. While using the `state` could also make sense, there are some considerations when these change that I want to handle at the top level and pass to multiple components. If I maintain state in `Pagination`, I end up breaking the top down approach and introduce code in places that doesn't make sense.
 
@@ -141,7 +141,7 @@ There are two types that are being passed back to `DataGrid` - "page" and "displ
 
 There are, however, two items we want to track in `state` - the next/previous button states.
 
-{% highlight js %}
+```js
 /* pagination.jsx */
 class Pagination extends React.Component{
   constructor(props) {
@@ -166,7 +166,7 @@ class Pagination extends React.Component{
     return buttonStates;
   }
 ...
-{% endhighlight %}
+```
 
 I created a function `buttonStates()` to manage the next/previous buttons.  This just checks the current page, and determines if it's first or last in the array of `pageOptions`. The buttons then have `disabled={!this.state.next}` and `disabled={!this.state.prev}` to turn them on and off accordingly.
 
@@ -176,7 +176,7 @@ That's it - this is all we need the `Pagination` component to do. What we have s
 
 ## Driving With The Top Down
 Since we created `Pagination` to operate with very little functionality - `DataGrid` needs to pass down the right `props` to keep things accurate. `Pagination` needs several data points from `DataGrid`:
-{% highlight html %}
+```html
 <Pagination
   count={this.state.count}
   page={this.state.page}
@@ -187,14 +187,14 @@ Since we created `Pagination` to operate with very little functionality - `DataG
   displayCountOptions = {this.props.displayCountOptions}
   onChange={this.handlePagination}
 />
-{% endhighlight %}
+```
 
 Let's walk through this before moving on. The `Pagination` render method is looking for several items, and those all are passed as props.  `DataGrid` will manage everything in `state` that is allowed to change. Notice two items are not `state` properties?  `displayCountOptions` in reality should never change - I've set mine to 10 and 25. I can't think of a good reason for the UI to change those options in the drop down, so I just left them as `props`. Also, I introduce the `onChange()` property that takes a function, and eventually is called by `updateSettings()` in the `Pagination` component. Now it all starts to come together.
 
 ### Constructing DataGrid
 When I build the initial `DataGrid` there are a few steps I want to perform right away.
 
-{% highlight js %}
+```js
 /* app.jsx */
 
 class DataGrid extends React.Component{
@@ -226,7 +226,7 @@ class DataGrid extends React.Component{
   render() {...}
 };
 
-{% endhighlight %}
+```
 
 In ES6, we need to bind all class functions to `this` - `this.handlePagination = this.handlePagination.bind(this);`, etc. Doing this allows each method access to the current instance of `DataGrid`.
 
@@ -235,7 +235,7 @@ You might be wondering why I have `this.props.data` and `this.state.data`. The r
 ## Class Helper Functions
 There are three functions in our `DataGrid` component that simply return some result:
 
-{% highlight js %}
+```js
 /* app.jsx */
 ...
 getStartEnd(state) {
@@ -261,7 +261,7 @@ paginateData(start, end) {
   return this.props.data.slice(start - 1, end);
 }
 ...
-{% endhighlight %}
+```
 
 These three functions are just class helpers - they run when called, do not set state, and return a result. Basically, helper functions to reduce redundancy. We could create `static` methods, which makes those functions externally available, allowing them to run prior to creating a component instance, and they don't have access to `state` or `props`.  This really isn't what we need here, so they remain class helper methods.
 
@@ -274,7 +274,7 @@ These methods are really simple in function.
 ### Handling The Pagination Changes
 All that's left to do it handle the pagination. `handlePagination()` runs when the `Pagination` component fires `this.props.onChange`.
 
-{% highlight js %}
+```js
 /* app.jsx */
 ...
 handlePagination(setting) {
@@ -300,7 +300,7 @@ handlePagination(setting) {
   this.setState(nextState);
 }
 ...
-{% endhighlight %}
+```
 
 `Pagination` sends an object back, `{type:value}` based on what is changed, either `displayCount` or `page`. At this point, I felt it necessary to include [`lodash`](https://lodash.com/) for the `assign()` method.
 
@@ -312,13 +312,13 @@ Finally, I update the final items in `state` and then using `setState()` method 
 When you initialize the `DataGrid`, you can actually pass in additional `props`. `DataGrid` relies on `displayCount`, `displayCountOptions` array, `page`, and `data`. This will allow the owner of `DataGrid` to pass in specific details to render, say the user leaves the containing page and comes back - you might store where they left off and return them to the exact spot.
 
 However, these aren't required, and I handle that using `defaultProps` on the component class.
-{% highlight js %}
+```js
 DataGrid.defaultProps = {
   displayCount: 10,
   page: 1,
   displayCountOptions : [10,25],
 }
-{% endhighlight %}
+```
 
 Now, our `DataGrid` only requires `data` to be passed in, and everything else has a default.
 

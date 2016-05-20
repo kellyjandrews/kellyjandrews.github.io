@@ -10,15 +10,15 @@ First, you will need to setup a few things to get it running.  Go to https://cod
 
 Once you have your app created, you will need to do a quick key retrieval of your API key.
 
-{% highlight js %}
+```js
 curl -X POST -H "Content-Type: application/json" -d '{ "clientId": "YOURID","clientSecret": "YOURSECRET"}' https://auth.exacttargetapis.com/v1/requestToken
-{% endhighlight %}
+```
 
 Running this cURL request should return you
 
-{% highlight js %}
+```js
 {"accessToken":"YOURACCESSTOKEN","expiresIn":3600}
-{% endhighlight %}
+```
 
 
 If not - check your clientID and clientSecret, make sure those are accurate.  
@@ -27,11 +27,11 @@ Once you have your Access Token, make note that it does expire in 60 minutes.  E
 
 In order to use this token in your SOAP calls, you would need the following
 
-{% highlight xml %}
+```xml
 <Header>
     <fueloauth xmlns="http://exacttarget.com">YOURACCESSTOKEN</fueloauth>
 </Header>
-{% endhighlight %}
+```
 
 
 I prefer this method as it lends to better security, and allows for a cleaner SOAP packet to be sent.

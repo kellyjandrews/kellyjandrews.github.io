@@ -10,9 +10,9 @@ I code on a Mac, so I'm speaking from that point of view, but most of this shoul
 
 So how do you get started?  First you probably want to just find the `.bash_profile` file, and be able to edit it. Fire up a terminal and type:
 
-{% highlight bash %}
+```bash
 open -e ~/.bash_profile
-{% endhighlight %}
+```
 
 
 Consider this your first bash script.  `open` will open up an application and if you pass in a file name, it will open that as well.
@@ -21,19 +21,19 @@ Don't go about just changing things in here quite yet, though. Most of this is a
 
 What we are going to do here, is add a line to load up a file that will get created in a bit. At the top of `.bash_profile`, add the following:
 
-{% highlight bash %}
+```bash
 [[ -f ~/.bashrc ]] && source ~/.bashrc
-{% endhighlight %}
+```
 
 
 Now we are starting to get a little crazy. So what is this doing?  The `[[]]` is an if shortcut. So the line is a conditional, and a full list of the flags available are [here](http://tldp.org/LDP/Bash-Beginners-Guide/html/sect_07_01.html). This particular call uses `-f` and is going to return true if the file exists.  The `&&` is the command to run when the conditional is true. `Source` is a command you run in terminal to add the file in memory so you can use it. You may/may not have a `~/.bashrc` file created. If you do - change the name to something else. Then, create that particular file.
 
 In the file we just created, let's try to add something that will actually perform a task. Open up the `~/.bashrc` and add the following two lines:
 
-{% highlight bash %}
+```bash
 alias bashrc="open -e ~/.bashrc"
 alias sb=". ~/.bashrc"
-{% endhighlight %}
+```
 
 
 Save the file, and get back to the command prompt. Now type in `. ~/.bashrc`.  In case of confusion - let me explain what we just did.
@@ -42,9 +42,9 @@ Bash allows for a command called `alias` to basically create a short cut.  In ou
 
 Go ahead and type in `bashrc` and start editing. You can add all kinds of great aliases for constant bash commands you are running - like npm or git.  For example I use:
 
-{% highlight bash %}
+```bash
 alias npmsave="npm install $1 --save-dev"
-{% endhighlight %}
+```
 
 
 We have already seen most of this, except for the `$1`.  This is a reference to what you pass in as a parameter to the alias.  Now you need to type `sb` to source your `.bashrc` file.  You may be wondering why we didn't use `source` as the alias.  I tried that, and had a bad day - don't use bash functions as aliases or you will loose your functions.  You can get them back - but I'm not going to tell you how so you don't even try it :)

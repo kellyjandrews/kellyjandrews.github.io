@@ -14,7 +14,7 @@ The first step to get the search working, is to get the value of the search box 
 
 `TitleBar` doesn't make any sense, and the component is actually the `SearchBox`. I've made that change, and our search box component looks like this:
 
-{% highlight js %}
+```JSX
 /* searchbox.jsx */
 class SearchBox extends React.Component{
   constructor(props) {
@@ -50,7 +50,7 @@ class SearchBox extends React.Component{
 };
 
 export default SearchBox;
-{% endhighlight %}
+```
 
 Once again, our friend `onChange` makes an appearance, calling the `handleKeyPress()` method in the class instance. This method then passes back the object `{searchTerm: e.target.value}` to the callback method in the owner, `DataGrid`.  We bind `handleKeyPress` to the current instance in the contructor method. The non ES6 method uses `createClass()` to automatically bind methods to the component.  Since we are now extending a base class, that bit of functionality went away.  You can read more about the decision behind that on the [React blog](https://facebook.github.io/react/blog/2015/01/27/react-v0.13.0-beta-1.html#autobinding). I can't wait for ES7 already!
 

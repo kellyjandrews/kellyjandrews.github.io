@@ -16,7 +16,7 @@ It's hard to directly explain how much impact it has, but showing code is one wa
 
 #### The Old Way
 
-{% highlight php %}
+```php
 <?php
   require(`'exacttarget_soap_client.php`');
     $wsdl = 'https://webservice.exacttarget.com/etframework.wsdl'';
@@ -62,10 +62,10 @@ It's hard to directly explain how much impact it has, but showing code is one wa
   var_dump($e);
 }
 ?>
-{% endhighlight %}
+```
 
 #### The New Way
-{% highlight php %}
+```php
 <?php
   require('../ET_Client.php');
     try {
@@ -82,7 +82,7 @@ It's hard to directly explain how much impact it has, but showing code is one wa
  } catch (Exception  $e) {
   var_dump($e);
 }
-{% endhighlight %}
+```
 
 If you ask anyone, that should pretty much be self explanatory.
 

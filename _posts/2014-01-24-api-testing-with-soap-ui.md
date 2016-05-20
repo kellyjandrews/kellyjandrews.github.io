@@ -19,18 +19,18 @@ SOAP UI also us to create REST services in our UI as well.  It's really simple t
 
 Once you have that completed, right click on the project name, and select "New REST Service from URI".  In the dialog, copy and paste the following:
 
-{% highlight html %}
+```html
 https://auth.exacttargetapis.com/v1/requestToken
-{% endhighlight %}
+```
 
 Click ok, and it will set everything up for you, and open a new window. Change the method type to `POST` and make sure the "Media Type" is listed as `application/json`. In the media type window, at the bottom, add this json, replacing the x's with your appropriate information.
 
-{% highlight js %}
+```js
 {
   "clientId": "xxxxxxxxxx",
   "clientSecret": "xxxxxxxxxx"
 }
-{% endhighlight %}
+```
 
 After you get that set up, click the play button in the upper left portion of the window, and get your access token.  The token expires after 60 minutes, but you can come back here to update your token.
 
@@ -40,14 +40,14 @@ If you haven't build a SOAP enevelope before, it can be a little tricky at first
 
 The first portion is building the envelope itself.  Let's work with a `describe` method first. Right-click `describe` and select "New Request." It will generate some generic code, you can delete all of that and replace with the following.
 
-{% highlight xml %}
+```xml
 <soapenv:Envelope
 xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
    ...
 
 </soapenv:Envelope>
-{% endhighlight %}
+```
 
 Running this code will give you a `Bad Request` response. That is expected, since we have a lot more code to add first.  it's important to note the `soapenv` prefix is there to prevent any naming conflicts. This is an XML thing, and it references the information in `http://schemas.xmlsoap.org/soap/envelope`.  You would set up namespaces to avoid naming collisions, and provide syntax reference. The namespace declaration has the following syntax. _xmlns:prefix="URI"_. It's not required specifically, but makes things a little easier to look at.
 
@@ -56,19 +56,19 @@ Running this code will give you a `Bad Request` response. That is expected, sinc
 
 Now is when that authorization token is needed. If it's been longer than 60 minutes, go ahead and refresh your token, copy and paste in your SOAP enevelope.  The header goes in between the open and closing `Envelope` tag.  
 
-{% highlight xml %}
+```xml
  <soapenv:Envelope ...>
     <soapenv:Header>
          <ns1:fueloauth xmlns:ns1="http://exacttarget.com">XXXXXXXXXXXXXXXXXXXXXXXX</ns1:fueloauth>
     </soapenv:Header>
  </soapenv:Envelope>
-{% endhighlight %}
+```
 
 #### Give the head a body
 
 The body is where the main work for the call is being done. Here you describe in XML everything you are doing.  For our example, let's look at the `describe` on the `subscriber` object.
 
-{% highlight xml %}
+```xml
  <soapenv:Envelope ...>
     <soapenv:Header>...</soapenv:Header>
     <soapenv:Body>
@@ -81,7 +81,7 @@ The body is where the main work for the call is being done. Here you describe in
       </DefinitionRequestMsg>
   </soapenv:Body>
  </soapenv:Envelope>
-{% endhighlight %}
+```
 
 
 
@@ -89,17 +89,17 @@ The body is where the main work for the call is being done. Here you describe in
 Exacttarget has a few endpoints for you to be concerned with.  When you login to your account , you should see an indication of s1, s4, or s6.  If you don't see one, it's safe to assume you are on s1.
 
 Why is this important? You need to point your SOAP call to the correct stack, or it won't work.  One of these endpoints are what you most likely should use:
-{% highlight html %}
+```html
 https://webservice.exacttarget.com/Service.asmx
 https://webservice.s4.exacttarget.com/Service.asmx
 https://webservice.s6.exacttarget.com/Service.asmx
-{% endhighlight %}
+```
 
 
 #### Just push play
 Now that you have everything set up, hit the play button in the top left corner of the request window.  On the right, you should now see the results that looks something like
 
-{% highlight xml %}
+```xml
 <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
        <soap:Header>
           <wsa:Action>DescribeResponse</wsa:Action>
@@ -127,7 +127,7 @@ Now that you have everything set up, hit the play button in the top left corner 
                    <IsRequired>true</IsRequired>
                 </Properties>
                 ....
-{% endhighlight %}
+```
 
 
 

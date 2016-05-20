@@ -10,7 +10,7 @@ I have been working on documentation utilizing [Assmeble.io](http://www.assemble
 
 I am pushing my static files to [Heroku](http://www.heroku.com/), and using [Expressjs](http://expressjs.com/) to serve the static files.  This part was super simple with the following code:
 
-{% highlight js %}
+```js
 var express = require('express');
 
 var app = express();
@@ -22,7 +22,7 @@ var port = Number(process.env.PORT || 5000);
 app.listen(port, function() {
   console.log("Listening on " + port);
 });
-{% endhighlight %}
+```
 
 Everything worked great, and it's super fast. Anyone looking to create documentation - it's a great way to go, and I'll be blogging more about how this works in the coming weeks.
 
@@ -45,41 +45,41 @@ Setting up a [Node-HTTP-Proxy](https://github.com/nodejitsu/node-http-proxy) loo
 
 Adding the following code get's the proxy started:
 
-{% highlight js %}
+```js
 var httpProxy = require('http-proxy');
 var proxy = new httpProxy.createProxyServer();
-{% endhighlight %}
+```
 
 You then need to set up the routes to work correctly. I wanted to use {site}.herokuapp.com/blog to serve up my blog site.  In Ghost, there are a few `HTTP` methods you have to be concerned with for it al to function properly - `GET`, `POST`, `PUT`, `DELETE`.  So far, these are all of the ones I have run into, but if any others pop up, you would cut and past the same code and change the method.
 
 I started with (only listing the `GET` route here):
 
-{% highlight js %}
+```js
 app.get('/blog*', function (req, res, next) {
     proxy.web(req, res, {
         target: '{site-blog}.herokuapp.com'
     });
 });
-{% endhighlight %}
+```
 
 I tried various formats of this, getting hit with `503`, `500`, and `404` errors, or simply a blank page. What once seemed to be working locally - was no longer functioning as expected.
 
 I finally got back an error in Heroku reading "No Such App". I was getting close. Google search popped up with a post on [StackOverflow](http://stackoverflow.com/questions/6444280/heroku-no-such-app-error-with-node-js-node-http-proxy-module) which FINALLY (I at this point spent about 10 hours trying to get settings to work). I modified my code to this:
 
-{% highlight js %}
+```js
 app.get('/blog*', function (req, res, next) {
   req.headers.host = '{site-blog}.herokuapp.com';
     proxy.web(req, res, {
         target: '{site-blog}.herokuapp.com'
     });
 });
-{% endhighlight %}
+```
 
 After pushing the changes to Heroku - I fired it up, and got a `404` - from Ghost. This is where some folks would lose it - after all the frustration, still getting nowhere. However - I knew differently - this was a huge win - I got something back from the server.
 
 The final change I had to make was on the Ghost `config.js` file.  I'm running my `NODE_ENV` as production, so my production object initially looked like this:
 
-{% highlight js %}
+```js
 production: {
     url: '{site-blog}.herokuapp.com',
     mail: {},
@@ -99,13 +99,13 @@ production: {
         port: Number(process.env.PORT || 2368)
     }
 },
-{% endhighlight %}
+```
 
 This is fine if I'm running it as normal, but I'm running as a subdirectory, and a proxy. So I changed the `url` to this:
 
-{% highlight js %}
+```js
 url: '{site}.herokuapp.com/blog',
-{% endhighlight %}
+```
 
 Now it was expecting to see the base files served from my Express server under the subdirecory `/blog`.
 

@@ -11,16 +11,16 @@ Using some [Liquid template](http://liquidmarkup.org/) logic and the data alread
 
 Each post used the following [YAML Front Matter](http://jekyllrb.com/docs/frontmatter/):
 
-{% highlight yaml %}
+```yaml
 ---
 title: My Blog Post
 series: My Series Title
 ---
-{% endhighlight %}
+```
 
 And I modified my `post.html` layout file to include:
 
-{% highlight liquid %}
+```liquid
 {% raw %}
 {{content}}
 {% if page.series %}
@@ -38,7 +38,7 @@ And I modified my `post.html` layout file to include:
   </ol>
 {% endif %}
   {% endraw %}
-{% endhighlight %}
+```
 
 Essentially I grab all posts in `reversed` order (so they are in order by posted date ascending) and check for the `series` to match the current page. When that's true, I check if the page is not the current one with `{{"{%"}} if page.url != post.url %}` and provide a link to the other posts, and no link if the page is the one you are currently on.
 

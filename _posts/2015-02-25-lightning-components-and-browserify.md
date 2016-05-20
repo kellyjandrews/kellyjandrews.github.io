@@ -13,22 +13,22 @@ One of the difficulties I have run into during my learning process, is that incl
 
 When you want to use those in a Lightning component, you simply call it like so:
 
-{% highlight xml %}
+```xml
 <aura:application >
     <link href='/resource/bootstrap/' rel="stylesheet"/>
 </aura:application>
-{% endhighlight %}
+```
 
 This calls the static resource that is the css file for [Bootstrap SF1 theme](http://developer.salesforcefoundation.org/bootstrap-sf1/).
 
 Based on this, simply adding a jQuery static resource should be a piece of cake.
 
-{% highlight xml %}
+```xml
 <aura:application >
     <script src="/resource/jQuery/"></script>
     <link href='/resource/bootstrap/' rel="stylesheet"/>
 </aura:application>
-{% endhighlight %}
+```
 
 One would expect this to load jQuery, which, essentially it does, however it's a bit of a race case.  The script loads a few milliseconds after the application, and you can't actually use it. There is a [great thread](https://developer.salesforce.com/forums/ForumsMain?id=906F0000000AmazIAC) covering this behavior, and I won't go into much detail here, but the solution is to use [RequireJS](http://requirejs.org/) in a component, and an event to listen for everything to be loaded, and then load the RequireJS config and all of the static resources.
 
@@ -39,42 +39,42 @@ I have been toying with [Browserify](http://browserify.org/) for a bit now, and 
 
 In my developer console, I created a New->Static Resource, and named it `AppScripts`. It creates a new js file with a sample function in it. I'll use this again in a bit, but went ahead and set it up in the application.
 
-{% highlight xml %}
+```xml
 <aura:application >
     <script src="/resource/AppScripts/"></script>
     <link href='/resource/bootstrap/' rel="stylesheet"/>
 </aura:application>
-{% endhighlight %}
+```
 
 Now I turned my attention to my local machine. I'm not going to go over all the ins and outs of Browserify, but I will walk you through what I did to set it up.
 
 First, you have to get set up a bit, and install a couple things. You will be using [NPM](https://www.npmjs.com) to manage your packages, so go through a quick `npm init` process first. Once that's complete, open up your `package.json` and update your `scripts` section.
 
-{% highlight json %}
+```json
 "scripts": {
   "bundle": "browserify main.js -o scripts.js"
 }
-{% endhighlight %}
+```
 
 This will allow you to use `npm run bundle` from the command line, and will output a `scripts.js` file.
 
 First, however, you have to install the required modules -
 
-{% highlight bash %}
+```bash
 npm i --save-dev browserify jQuery
-{% endhighlight %}
+```
 
 This will install the requirements for this simple test. After that completes, I created a `main.js` file. Remember the script in npm? It's looking for main.js - you can change the script to be any name - just make sure they match.
 
 In my main.js file - I did just a quick script to see if it was working -
 
-{% highlight js %}
+```js
 var $ = jQuery = require('jquery');
 
 $(function(){
   console.log('This is working.');
 });
-{% endhighlight %}
+```
 
 When `npm run bundle` gets called on the command line - it will take this file, and it's recursive dependencies, and output them to `scripts.js`.  You can then minify this file to save space, but for now I'm skipping that.  At this point, I opened my `scripts.js` file, copied the entire file, and pasted into my static resource `AppScripts`, and saved it.  
 
