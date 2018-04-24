@@ -20,10 +20,10 @@
   },
   "scripts": {
     "build": "npm run less & npm run webpack && bundle exec jekyll build",
-    "dev": "npm run less & npm run webpack && npm run jekyll"
+    "dev": "npm run less & npm run webpack && npm run jekyll",
     "jekyll": "bundle exec jekyll serve --drafts --config _config-dev.yml --safe --incremental -H 0.0.0.0",
-    "less": "./node_modules/.bin/lessc ./less/styles.less ./assets/css/styles.css",
-    "webpack": "./node_modules/.bin/webpack",
+    "less": "lessc ./less/styles.less ./assets/css/styles.css",
+    "webpack": "webpack",
 
   },
   "author": "",
