@@ -6,8 +6,7 @@ var config = {
 		server: {
 			baseDir: "_site"
 		},
-		notify: false,
-		browser: ["google chrome"]
+		notify: false
 	},
 	less: {
 		src: src + '/less/styles.less',

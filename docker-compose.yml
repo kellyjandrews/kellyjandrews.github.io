@@ -1,0 +1,10 @@
+version: "3"
+services:
+  site:
+    build: .
+    volumes:
+    - .:/srv/jekyll/
+    - /srv/jekyll/node_modules
+    ports:
+      - "3000:3000"
+    command: ./node_modules/.bin/gulp
