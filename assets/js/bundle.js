@@ -85,7 +85,7 @@ var $ = jQuery = __webpack_require__(2),
 	bootstrap = __webpack_require__(3),
 	hbs = __webpack_require__(16),
 	moment = __webpack_require__(25);
-
+test
 $(function(){
 
 	$('article.post').on('mouseover', function(){

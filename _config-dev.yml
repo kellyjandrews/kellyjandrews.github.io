@@ -29,7 +29,7 @@ excerpt_separator: "<!-- more -->"
 permalink: date
 
 # Handling Reading
-exclude: ["less","gulp","node_modules","Gulpfile.js","package.json","scripts"]
+exclude: ["less","node_modules","package.json","scripts"]
 include: ["_pages"]
 encoding: "utf-8"
 

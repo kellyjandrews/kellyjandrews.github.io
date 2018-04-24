@@ -6,25 +6,35 @@
   "dependencies": {},
   "devDependencies": {
     "bootstrap": "3.3.1",
+    "font-awesome": "^4.7.0",
     "handlebars": "3.0.0",
     "handlebars-template-loader": "^1.0.0",
     "hbsfy": "2.2.1",
-    "html-webpack-plugin": "^3.2.0",
     "jquery": "2.1.1",
     "less": "^3.0.2",
     "moment": "2.9.0",
-    "style-loader": "^0.21.0",
-    "vinyl-source-stream": "1.0.0",
+    "nodemon": "^1.17.3",
     "webpack": "^4.6.0",
     "webpack-cli": "^2.0.15"
   },
   "scripts": {
-    "build": "npm run less & npm run webpack && bundle exec jekyll build",
-    "dev": "npm run less & npm run webpack && npm run jekyll",
-    "jekyll": "bundle exec jekyll serve --drafts --config _config-dev.yml --safe --incremental -H 0.0.0.0",
+    "build": "npm run less & webpack && bundle exec jekyll build",
+    "dev": "npm run watch-less & npm run watch-webpack & npm run watch-jekyll",
     "less": "lessc ./less/styles.less ./assets/css/styles.css",
-    "webpack": "webpack",
-
+    "watch-jekyll": "bundle exec jekyll serve --drafts --config _config-dev.yml --safe --incremental -H 0.0.0.0",
+    "watch-less": "nodemon --watch less --exec npm run less",
+    "watch-webpack": "nodemon --watch scripts --watch templates --exec webpack"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "_includes",
+      "_layouts",
+      "_pages",
+      "_posts",
+      "_site",
+      "_data",
+      "less"
+    ]
   },
   "author": "",
   "license": "ISC"

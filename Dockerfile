@@ -13,8 +13,9 @@ RUN echo "gem: --no-rdoc --no-ri" >> "${HOME}/.gemrc" && \
     bundle install --jobs 20 --retry 5 --without development
 
 COPY package.json .
-RUN npm install --quiet && \
-    PATH=/usr/src/node_modules/.bin:$PATH
+RUN npm install --quiet
+
+ENV PATH /usr/src/node_modules/.bin:$PATH
 
 COPY . .
 
