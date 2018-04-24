@@ -10,8 +10,6 @@ github: "https://github.com/kellyjandrews"
 twitter: "https://twitter.com/kellyjandrews"
 linkedin: "https://www.linkedin.com/in/kjandrews/en"
 stackexchange: "https://stackexchange.com/users/2222625/kelly-j-andrews"
-gems:
-  - jekyll-sitemap
 
 # Where things are
 source:      .

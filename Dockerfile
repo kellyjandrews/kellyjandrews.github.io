@@ -17,6 +17,4 @@ RUN npm install --quiet
 
 COPY . .
 
-EXPOSE 4000
-
-CMD ["./node_modules/.bin/gulp"]
+CMD ["npm", "run", "dev"]
