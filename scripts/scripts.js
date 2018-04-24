@@ -40,20 +40,6 @@ $(function(){
 			$('#employment').html(experienceTmpl(data));
 		});
 
-
-		// $.when(demographics(), skills(), education(), experience()).done(function(demographics, skills, education, experience){
-		//
-		// 	var viewModel = {
-		// 		demographics: map.fromJS(demographics[0]),
-		// 		skills: map.fromJS(skills[0]),
-		// 		education: map.fromJS(education[0]),
-		// 		experience: map.fromJS(experience[0])
-		// 	};
-		//
-		// 	var model = ko.applyBindings(viewModel);
-		//
-		// });
-
 	};
 
 
