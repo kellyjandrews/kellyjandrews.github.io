@@ -1,18 +1,14 @@
 <div class="articles">
 {% for post in site.posts %}
-<article class="post col-lg-3 col-md-4 col-sm-6">
+<article class="col-lg-3 col-md-4 col-sm-6">
   <a href="{{ post.url }}" title="{{ post.title }}">
-  <div class="overlay hidden"></div>
     <header>
         <h1>{{ post.title }}</h1>
     </header>
-    <section class="hidden">
+    <section>
       <small>{{ post.date | date: "%m-%d-%Y" }}</small>
         <p>{{ post.excerpt | strip_html | truncatewords:35}}</p>
     </section>
-    <!-- <footer>
-      <a class="read-more" href="{{ post.url }}" title="{{ post.title }}">Read more</a>
-    </footer> -->
   </a>
 </article>
 {% endfor %}
