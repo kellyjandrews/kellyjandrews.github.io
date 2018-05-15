@@ -5,12 +5,16 @@ title: Experience
 ---
 
 <div id="experience" class="row">
-  <div class="col-md-3">
+  <div>
     <div id="demographics"></div>
     <div id="education"></div>
     <div id="skills"></div>
   </div>
-  <div class="col-md-9">
+  <div>
     <div id="employment"></div>
   </div>
 </div>
+
+<script>
+window.data = {{site.data | jsonify }};
+</script>

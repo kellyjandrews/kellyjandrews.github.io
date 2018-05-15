@@ -2,7 +2,7 @@
 var $ = jQuery = require('jquery'),
 	hbs = require('hbsfy/runtime'),
 	moment = require('moment');
-
+console.log(window.data);
 $(function(){
 
 	if($('#experience').length) {
@@ -13,22 +13,10 @@ $(function(){
 		var skillsTmpl = require('../templates/skills.hbs');
 		var experienceTmpl = require('../templates/experience.hbs');
 
-		$.get('http://private-a1ac-kellyjandrews.apiary-mock.com/demographics', function(data) {
-			$('#demographics').html(demographicTmpl(data));
-		});
-
-		$.get('http://private-a1ac-kellyjandrews.apiary-mock.com/skills', function(data){
-			$('#skills').html(skillsTmpl(data));
-		});
-
-		$.get('http://private-a1ac-kellyjandrews.apiary-mock.com/education', function(data){
-			$('#education').html(educationTmpl(data));
-		});
-
-		$.get('http://private-a1ac-kellyjandrews.apiary-mock.com/experience', function(data){
-			$('#employment').html(experienceTmpl(data));
-		});
-
+		$('#demographics').html(demographicTmpl(window.data.demographics));
+		$('#education').html(educationTmpl(window.data.education));
+		$('#employment').html(experienceTmpl(window.data.experience));
+		$('#skills').html(skillsTmpl(window.data.skills));
 	};
 
 

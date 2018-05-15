@@ -84,7 +84,7 @@ module.exports = __webpack_require__(1);
 var $ = jQuery = __webpack_require__(2),
 	hbs = __webpack_require__(3),
 	moment = __webpack_require__(12);
-
+console.log(window.data);
 $(function(){
 
 	if($('#experience').length) {
@@ -95,22 +95,10 @@ $(function(){
 		var skillsTmpl = __webpack_require__(97);
 		var experienceTmpl = __webpack_require__(98);
 
-		$.get('http://private-a1ac-kellyjandrews.apiary-mock.com/demographics', function(data) {
-			$('#demographics').html(demographicTmpl(data));
-		});
-
-		$.get('http://private-a1ac-kellyjandrews.apiary-mock.com/skills', function(data){
-			$('#skills').html(skillsTmpl(data));
-		});
-
-		$.get('http://private-a1ac-kellyjandrews.apiary-mock.com/education', function(data){
-			$('#education').html(educationTmpl(data));
-		});
-
-		$.get('http://private-a1ac-kellyjandrews.apiary-mock.com/experience', function(data){
-			$('#employment').html(experienceTmpl(data));
-		});
-
+		$('#demographics').html(demographicTmpl(window.data.demographics));
+		$('#education').html(educationTmpl(window.data.education));
+		$('#employment').html(experienceTmpl(window.data.experience));
+		$('#skills').html(skillsTmpl(window.data.skills));
 	};
 
 

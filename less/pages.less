@@ -4,7 +4,7 @@
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
-  padding: 95/16rem;
+  padding: ~"@{margins}rem";
   & article {
     height: 200px;
     width: @article-width;
@@ -38,6 +38,11 @@
     content: "";
     width: @article-width;
   }
+}
+
+#experience {
+  padding: 0 ~"@{margins}rem";
+  display: flex;
 }
 
 .languages {//get styles here

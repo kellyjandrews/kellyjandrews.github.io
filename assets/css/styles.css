@@ -444,6 +444,10 @@ div.highlight pre code {
   content: "";
   width: 17vw;
 }
+#experience {
+  padding: 0 5.9375rem;
+  display: flex;
+}
 .employer {
   padding-bottom: 20px;
 }
