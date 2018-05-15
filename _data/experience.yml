@@ -1,0 +1,143 @@
+employers:
+- employer: Codeship
+  startDate: Mon Feb 20 2017 00:00:00 GMT-0400 (EDT)
+  endDate:
+  roles:
+  - title: Developer Advocate
+    description: Advocate for developers and community withing a growing leader in
+      the CI/CD space.
+    skills:
+    - advocacy
+    - evangelism
+    - community
+    - public speaking
+    - content development
+    - leadership
+- employer: The Odyssey Online
+  startDate: Mon Jun 27 2016 00:00:00 GMT-0400 (EDT)
+  endDate: Fri Feb 17 2017 00:00:00 GMT-0400 (EDT)
+  roles:
+  - title: Senior Software Enginner
+    description: Lead a cross functional team to build a top tier content delivery
+      platform.
+    skills:
+    - react
+    - redux
+    - software development
+    - webpack
+    - software architecture
+    - leadership
+- employer: Syncano
+  startDate: Mon Jun 01 2015 00:00:00 GMT-0400 (EDT)
+  endDate: Fri Jul 01 2016 00:00:00 GMT-0400 (EDT)
+  roles:
+  - title: Principal, Developer Evangelist
+    description: Manage a distributed team of evangelists commited to building a community.
+      Our team builds API demonstrations, talks to varied audiences about our product,
+      and provides feedback to development teams.
+    skills:
+    - team management
+    - community development
+    - cross-functional
+    - public speaking
+    - content development
+    - communication
+    - evangelism
+- employer: Salesforce
+  startDate: Mon Oct 05 2009 00:00:00 GMT-0400 (EDT)
+  endDate: Fri May 29 2015 00:00:00 GMT-0400 (EDT)
+  roles:
+  - title: Senior Manager, Developer Advocates
+    description: Manage a distributed team of Advocates and engineers dedicated to
+      the evangelism of the Salesforce Marketing Cloud.  Worked with several cross
+      functional teams to improve documentation, improve developer skills, and
+      increase partner adoption.
+    skills:
+    - team management
+    - community development
+    - cross-functional
+    - public speaking
+    - content development
+    - communication
+  - title: Senior Developer Advocates
+    description: Led a distributed team of Advocates and engineers dedicated to the
+      evangelism of the Salesforce Marketing Cloud.  Worked with several cross functional
+      teams to improve documentation, improve developer skills, and increase partner
+      adoption.
+    skills:
+    - team management
+    - community development
+    - public speaking
+    - content development
+    - communication
+  - title: Tenchnical Product Manager
+    description: Led a cross functional team to implement a sales demonstration strategy
+      that included the management of nearly 700 demonstration accounts globally.
+    skills:
+    - executive software demonstration
+    - management
+    - product development
+    - support mindset
+    - self motivation
+  - title: Solutions Designer
+    description: Dedicated engineer for high value deals.  Various tasks included
+      proof of concept development, demonstration environments, and  presentations
+    skills:
+    - customized sales demonstrations
+    - enablement
+    - proof of concept
+    - fast paced, rapid change environment
+- employer: Sixteen Eighteen Design, LLC
+  startDate: Wed Jul 01 2009 00:00:00 GMT-0400 (EDT)
+  endDate: Wed Sep 30 2009 00:00:00 GMT-0400 (EDT)
+  roles:
+  - title: Principal
+    description: Services oriented, self run business providing web application development
+      for business globally.
+    skills:
+    - software development lifecycle
+    - self motivation
+    - entrepreneurial skillset
+    - business operations
+- employer: Guitar Center
+  startDate: Sat Nov 01 2008 00:00:00 GMT-0400 (EDT)
+  endDate: Thu Oct 01 2009 00:00:00 GMT-0400 (EDT)
+  roles:
+  - title: Web Production Designer
+    description: 'Online retail store for musical instruments. Web site development
+      using large e-commerce backend platform, major code updates, and branding of
+      brand subsidies. '
+    skills:
+    - HTML
+    - CSS
+    - jQuery
+    - Email Marketing
+    - Web Design
+    - User skills
+    - Branding
+    - E-Commerce
+- employer: Force 5 Media
+  startDate: Thu Nov 01 2007 00:00:00 GMT-0400 (EDT)
+  endDate: Fri Oct 31 2008 00:00:00 GMT-0400 (EDT)
+  roles:
+  - title: Multimedia Designer
+    description: Services organization building successful marketing materials for
+      regional buisnesses.
+    skills:
+    - PHP
+    - HTML
+    - CSS
+    - ".NET"
+    - UI/UX
+    - Self Motivation
+- employer: The Troyer Group
+  startDate: Sat Jul 01 2006 00:00:00 GMT-0400 (EDT)
+  endDate: Wed Oct 31 2007 00:00:00 GMT-0400 (EDT)
+  roles:
+  - title: Graphic Designer
+    description: General design duties for a marketing department including advertisements,
+      trade show booth design, direct mail, and sales meeting materials.
+    skills:
+    - brand
+    - marketing tactics
+    - resourcefulness

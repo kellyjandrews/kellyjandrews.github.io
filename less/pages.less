@@ -40,28 +40,94 @@
   }
 }
 
-#experience {
-  padding: 0 ~"@{margins}rem";
+.experience {
+  padding: ~"@{margins}rem";
   display: flex;
-}
-
-.languages {//get styles here
-};
-.frameworks {//get styles here
-};
-.general {//get styles here
-};
-.certificates {//get styles here
-};
-
-.employer {padding-bottom:20px;}
-.role{padding:10px;}
-
-#demographics, #education, #skills {
-  & h5 {
-    margin-bottom: 0; padding-bottom:0;
+  & h2 {
+    padding-bottom: 0;
+    text-transform: lowercase;
   }
-  & p {
-    font-weight: 400; letter-spacing:-0.5px;font-size:12px; font-style:italic;
+  & aside {
+     width: 20vw;
+     .font-size(12);
+     margin-right: 10px;
+     & section:not(:last-child) {
+       padding-bottom: 30px;
+     }
+     & header {
+       &:not(:first-of-type) {
+         padding-top: 10px;
+       }
+       font-weight: 600;
+     }
+  }
+  & main {
+    flex: 1;
+    & section#experience {
+      & section {
+        display: flex;
+        flex-direction: column;
+        & > header {
+          &:extend(h3);
+          height: 50px;
+          line-height: 50px;
+          white-space: nowrap;
+          font-weight: 800;
+          vertical-align: middle;
+          cursor: pointer;
+
+          & small {
+            font-weight: 400;
+            margin-left: 10px;
+          }
+          &:before {
+            .fa-icon;
+            .fa-2x;
+            .fas;
+            content: @fa-var-caret-right;
+            margin-right:15px;
+            position: relative;
+            top:2px;
+          }
+        }
+        & article {
+          max-height: 0;
+          overflow: hidden;
+          transition: all 0.5s ease-out;
+        }
+        &.active {
+          & > header {
+            &:before {
+              .fa-icon;
+              .fa-2x;
+              .fas;
+              content: @fa-var-caret-down;
+              margin-right:7px;
+              position: relative;
+              top:2px;
+            }
+          }
+          & article {
+            max-height: 350px;
+          }
+        }
+      }
+    }
+  }
+  & main section#experience article {
+    padding: 0 15px;
+    & header {
+      .font-size(18);
+      font-weight: 200;
+      font-style: italic;
+      padding-bottom: 7px;
+    }
+    & main {
+      .font-size(16);
+      font-weight: 200;
+    }
+    & footer {
+      margin-bottom: 15px;
+    }
   }
 }

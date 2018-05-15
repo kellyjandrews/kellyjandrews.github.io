@@ -8,9 +8,16 @@ module.exports = {
     filename: 'bundle.js'
   },
   module: {
-    rules: [
-      { test: /\.hbs/, loader: "handlebars-template-loader" },
-    ]
+    rules: [{
+      test: /\.jsx?$/,
+      exclude: /(node_modules)/,
+      use: {
+        loader: 'babel-loader',
+        options: {
+          presets: ['react', 'env'],
+        }
+      }
+    }]
   },
   plugins: []
 };

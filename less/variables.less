@@ -18,8 +18,10 @@ body { margin-top: 70px; }
 
 @margins: 95/16;
 
-h1 {font-weight:100; letter-spacing:-2px;}
-h2 {font-weight:300; letter-spacing:-2px;}
+@fa-font-path: "../fonts";
+
+h1 {font-size: 40/16rem; font-weight:100; letter-spacing:-2px;}
+h2 {font-size: 30/16rem; font-weight:300; letter-spacing:-2px;}
 h3, h4, h5, h6 {font-weight:400;letter-spacing:-0.5px;}
 
 a, a:active, a:hover, a:visited {
@@ -35,6 +37,20 @@ p {
 
 p, .highlight {margin-bottom:15px;}
 
+
+.font-size(@size) {
+  font-size: @size/16rem;
+}
+
+.tag {
+  .font-size(10);
+  color: white;
+  background: black;
+  padding: 5px;
+  margin: 2px;
+  border-radius: .35rem;
+  display: inline-block;
+}
 
 .overlay {
     position:absolute;

@@ -1,0 +1,23 @@
+languages:
+- JavaScript
+- PHP
+- Ruby
+frameworks:
+- React
+- Redux
+- Thunk
+- Express
+- Sinatra
+- Slim
+- Angular
+- Ember
+- Handlebars
+- Boostrap
+- jQuery
+general:
+- graphic design
+- writing
+- public speaking
+- community building
+certificates:
+- Pragmatic Marketing
