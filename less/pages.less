@@ -1,51 +1,62 @@
-.articles article {
-  // margin: 0px;
-  padding:30px;
-  position: relative;
-  & header {
-    min-height: 150px;
-    transition: all .2s ease-in-out;
-    & h1 {
-      padding: 0;
-      margin: 0;
+@article-width: 17vw;
+
+.articles {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  padding: 95/16rem;
+  & article {
+    height: 200px;
+    width: @article-width;
+    position: relative;
+    & header {
+      &:extend(h1);
+      font-size: 36/16rem;
+      transition: all .2s ease-in-out;
+    }
+    & section {
+      opacity:0;
+    }
+
+    &:hover {
+      & header {
+        color: transparent;
+        text-shadow: 0 0 10px @brand-color;
+      }
+      & section {
+        color: @text-color;
+        position: absolute;
+        opacity: 1;
+        z-index: 100;
+        top: 0;
+        left: 0;
+        transition: opacity .2s ease-in-out;
+      }
     }
   }
-  & section{
-    padding:30px;
-    color: @brand-dkGray;
-    position: absolute;
-    z-index: 100;
-    top: 0;
-    left: 0;
-    opacity:0;
-    transition: opacity .2s ease-in-out;
+  &:after {
+    content: "";
+    width: @article-width;
   }
 }
 
-.articles article:hover {
-  & header {
-    color: transparent;
-    text-shadow: 0 0 10px @brand-color;
-  }
-  & section {
-    opacity: 1;
-  }
-}
-
-.blurry-text {
-   color: transparent;
-   text-shadow: 0 0 10px @brand-color;
-}
-
-.languages {.label-warning};
-.frameworks {.label-success};
-.general {.label-danger};
-.certificates {.label-info};
+.languages {//get styles here
+};
+.frameworks {//get styles here
+};
+.general {//get styles here
+};
+.certificates {//get styles here
+};
 
 .employer {padding-bottom:20px;}
 .role{padding:10px;}
 
 #demographics, #education, #skills {
-  h5 { margin-bottom: 0; padding-bottom:0;}
-  p {font-weight: 400; letter-spacing:-0.5px;font-size:12px; font-style:italic;}
+  & h5 {
+    margin-bottom: 0; padding-bottom:0;
+  }
+  & p {
+    font-weight: 400; letter-spacing:-0.5px;font-size:12px; font-style:italic;
+  }
 }

@@ -21,7 +21,7 @@
     "dev": "npm run watch-less & npm run watch-webpack & npm run watch-jekyll",
     "less": "lessc ./less/styles.less ./assets/css/styles.css",
     "watch-jekyll": "bundle exec jekyll serve --drafts --config _config-dev.yml --safe --incremental -H 0.0.0.0",
-    "watch-less": "nodemon --watch less --exec npm run less",
+    "watch-less": "nodemon --watch less -e less --exec npm run less",
     "watch-webpack": "nodemon --watch scripts --watch templates --exec webpack"
   },
   "nodemonConfig": {

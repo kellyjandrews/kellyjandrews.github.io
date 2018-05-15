@@ -1,12 +1,20 @@
-nav.navbar {.paddedLR; margin:0;}
-
-nav.navbar i {
-  padding: 10px 5px;
-  line-height: 50px;
-}
-
-nav.navbar header h1 {
-  font-size: floor((@font-size-h1 * .8));
-  line-height: 50px;
-  margin-top: 10px;
+nav {
+  padding: 0 95/16rem;
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  align-items: center;
+  justify-content: space-between;
+  background-color: white;
+  z-index: 100;
+  & header h1 a {
+    font-size: 28/16rem;
+    line-height: 70/16rem;
+    text-decoration: none;
+  }
+  & i {
+    padding: 5/16rem
+  }
 }

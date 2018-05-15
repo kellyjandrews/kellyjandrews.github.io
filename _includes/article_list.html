@@ -1,16 +1,13 @@
-<div class="articles">
+<section class="articles">
 {% for post in site.posts %}
-<article class="col-lg-3 col-md-4 col-sm-6">
-  <a href="{{ post.url }}" title="{{ post.title }}">
-    <header>
-        <h1>{{ post.title }}</h1>
-    </header>
-    <section>
-      <small>{{ post.date | date: "%m-%d-%Y" }}</small>
+  <article>
+    <a href="{{ post.url }}" title="{{ post.title }}">
+      <header>{{ post.title }}</header>
+      <section>
+        <small>{{ post.date | date: "%m-%d-%Y" }}</small>
         <p>{{ post.excerpt | strip_html | truncatewords:35}}</p>
-    </section>
-  </a>
-</article>
+      </section>
+    </a>
+  </article>
 {% endfor %}
-<div class="clearfix"></div>
-</div>
+</section>

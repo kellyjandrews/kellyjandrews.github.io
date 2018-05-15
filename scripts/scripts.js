@@ -1,6 +1,5 @@
-/*global bootstrap, $ */
+/*global $ */
 var $ = jQuery = require('jquery'),
-	bootstrap = require('bootstrap'),
 	hbs = require('hbsfy/runtime'),
 	moment = require('moment');
 
