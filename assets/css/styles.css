@@ -93,13 +93,13 @@ p,
   background-repeat: no-repeat;
   position: relative;
   color: #f0f0f0;
-  height: 494.0625 px;
+  height: 19.375rem;
   padding: 5.9375rem;
 }
 #homeHero #noblur {
   background: url(../images/background_dk_no_blur.png) no-repeat bottom right;
   opacity: 0;
-  height: 500px;
+  height: 31.25rem;
   position: absolute;
   display: block;
   width: 100%;
@@ -112,11 +112,14 @@ p,
   opacity: 1;
 }
 #homeHero #heroText {
+  float: left;
+  position: relative;
   z-index: 100;
 }
 #homeHero h1 {
   font-size: 6.0625rem;
   line-height: 5.8125rem;
+  z-index: 100;
 }
 #homeHero h2 {
   font-style: italic;

@@ -6,14 +6,15 @@
 	background-repeat: no-repeat;
 	position:relative;
 	color: #f0f0f0;
-	height: (500 - 95/16)px;
-	padding: 95/16rem;
+	@hero-height: (500/16) - @margins*2;
+	height: ~"@{hero-height}rem";
+	padding: ~"@{margins}rem";
 }
 
 #homeHero #noblur {
 		background: url(../images/background_dk_no_blur.png) no-repeat bottom right;
 		opacity: 0;
-		height:500px;
+		height:500/16rem;
 		position:absolute;
 		display:block;
 		width:100%;
@@ -26,12 +27,15 @@
 #homeHero:hover #noblur { opacity: 1; }
 
 #homeHero #heroText {
+		float:left;
+		position: relative;
 		z-index:100;
 }
 
 #homeHero h1{
 	font-size: 97/16rem;
 	line-height: 93/16rem;
+	z-index:100;
 }
 
 #homeHero h2{
