@@ -29,7 +29,7 @@ I used a [data generator](http://www.generatedata.com/) to produce 100 objects c
 
 With the example data created, include that in the `app.jsx` file, and pass the data into the `<DataGrid />` component, like this:
 
-```js
+```jsx
 /* app.jsx */
 ...
 import Data from '../data.js'
@@ -48,7 +48,7 @@ If you can think of `state` as the data that needs to be changed somehow - then 
 
 We passed in the `data` prop, which is now available in our `DataTable` class.  Using ES6 modules, React is slightly different with ES6 - but changes are small.  With ES6, you use constructor methods, and set the state there:
 
-```js
+```jsx
 /* app.jsx */
 class DataGrid extends React.Component{
   constructor(props) {
@@ -64,7 +64,7 @@ Currently, we have an array with 100 objects, and we are passing that into our `
 
 Here is where the data finally gets used:
 
-```js
+```jsx
 /* app.jsx */
 ...
 <DataTable rows={this.state.data}/>
@@ -73,7 +73,7 @@ Here is where the data finally gets used:
 
 Save that, wait for reload, and magic! Wait - no. Still the same.  Why, you ask?  Because we are passing the data to the `<DataTable />` component, but it has no clue we are doing that yet. Let's change that so it's expecting the data, and uses it to build out our rows.
 
-```js
+```jsx
 /* datatable.jsx */
 render() {
   var dataRows = this.props.rows.map(function (row, key){
@@ -91,9 +91,9 @@ In the `<DataTable />` component, I'm adding the variable `dataRows` to the top 
 
 In our `<tbody>` tag, we can now render out the `dataRows` variable like this:
 
-```js
+```jsx
 /* datatable.jsx */
-...
+...xs
 <tbody>
   {dataRows}
 </tbody>

@@ -66,7 +66,7 @@ We will get to really splitting these components apart in a later tutorial, but 
 #### Data Grid
 First, let's make a component that houses everything together, and call it `DataGrid`.  
 
-```js
+```jsx
 var DataGrid = React.createClass({
   render: function() {
     return (
@@ -88,7 +88,7 @@ One last item to note - the text is wrapped in a `<div>` tag.  React will error 
 
 Now that I have my main component `DataGrid` set up, I render it into a `<div>` on the page.
 
-```js
+```jsx
 React.render(
   <DataGrid />,
   document.getElementById('dataGrid')
@@ -101,7 +101,7 @@ Now, let's make the `DataGrid` hold other components inside.
 
 I'm going to start out really simple here, and just render some text.  We can go back build out markup later.
 
-```js
+```jsx
 var TitleBar = React.createClass({
   render: function() {
     return (
@@ -135,7 +135,7 @@ var Pagination = React.createClass({
 
 These will eventually hold all the markup we need to get our static mockup completed. What we need to do at this point, however, is add these to our `DataGrid` component, because just adding them doesn't do anything. Let's modify the `DataGrid` to look like so:
 
-```js
+```jsx
 var DataGrid = React.createClass({
   render: function() {
     return (

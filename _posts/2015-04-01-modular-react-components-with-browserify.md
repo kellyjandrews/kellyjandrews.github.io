@@ -13,7 +13,7 @@ The next logical step is to break our files up, and then introduce a simple buil
 ## Getting The Requirements
 Since we are adding some requirements to the build process, the first step is to get `npm` going. If you need to [install npm and node](https://docs.npmjs.com/getting-started/installing-node), do that now.
 
-```shell```
+```shell
 npm init
 ```
 
@@ -128,7 +128,7 @@ We are nearly there, just a couple more steps to really get this in a place that
 
 Let's first take a look at the `app.jsx` file, and how we are now using ES6 modules.
 
-```js
+```jsx
 import React from 'react';
 
 class DataGrid extends React.Component{
@@ -159,7 +159,7 @@ If you haven't read up on using ES6, there is a [great tutorial](http://www.jayw
 
 The `app.jsx` file is still missing a few items to get it working. We have yet to import the additional components.  Let's start with the `TitleBar` component.
 
-```js
+```jsxxs
 import React from 'react';
 
 class TitleBar extends React.Component{

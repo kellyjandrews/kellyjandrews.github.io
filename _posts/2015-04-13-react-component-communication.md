@@ -25,7 +25,7 @@ The goal is to manage these data points in the top-level, and then pass them dow
 ## Initial Changes
 The first step is to get the data to the top level from the two dropdowns for display count and current page. Since we are building components, it made sense to add a new component named `DropDownMenu` and render it in the `Pagination` component.
 
-```js
+```jsx
 /* pagination.jsx */
 class DropDownMenu extends React.Component {
   render() {
@@ -56,7 +56,7 @@ If you read the previous post in the series, this should look somewhat familiar.
 
 So far, we are only using the `render()` method. We need to add some handler to the `<a>` tag to pass back what has been selected.
 
-```js
+```jsx
 /* pagination.jsx */
 class DropDownMenu extends React.Component {
   handleClick(key) {
@@ -94,7 +94,7 @@ Much like `DropDownMenu`, `Pagination` doesn't need to do much more than report 
 
 First, let's take a look at the way we handle the selections bubbled up from the `DropDownMenu`.
 
-```js
+```jsx
 /* pagination.jsx */
 ...
 updateSettings(type, value) {
@@ -141,7 +141,7 @@ There are two types that are being passed back to `DataGrid` - "page" and "displ
 
 There are, however, two items we want to track in `state` - the next/previous button states.
 
-```js
+```jsx
 /* pagination.jsx */
 class Pagination extends React.Component{
   constructor(props) {
@@ -176,7 +176,8 @@ That's it - this is all we need the `Pagination` component to do. What we have s
 
 ## Driving With The Top Down
 Since we created `Pagination` to operate with very little functionality - `DataGrid` needs to pass down the right `props` to keep things accurate. `Pagination` needs several data points from `DataGrid`:
-```html
+
+```jsx
 <Pagination
   count={this.state.count}
   page={this.state.page}
@@ -194,7 +195,7 @@ Let's walk through this before moving on. The `Pagination` render method is look
 ### Constructing DataGrid
 When I build the initial `DataGrid` there are a few steps I want to perform right away.
 
-```js
+```jsx
 /* app.jsx */
 
 class DataGrid extends React.Component{
@@ -235,7 +236,7 @@ You might be wondering why I have `this.props.data` and `this.state.data`. The r
 ## Class Helper Functions
 There are three functions in our `DataGrid` component that simply return some result:
 
-```js
+```jsx
 /* app.jsx */
 ...
 getStartEnd(state) {
@@ -274,7 +275,7 @@ These methods are really simple in function.
 ### Handling The Pagination Changes
 All that's left to do it handle the pagination. `handlePagination()` runs when the `Pagination` component fires `this.props.onChange`.
 
-```js
+```jsx
 /* app.jsx */
 ...
 handlePagination(setting) {
@@ -312,7 +313,8 @@ Finally, I update the final items in `state` and then using `setState()` method 
 When you initialize the `DataGrid`, you can actually pass in additional `props`. `DataGrid` relies on `displayCount`, `displayCountOptions` array, `page`, and `data`. This will allow the owner of `DataGrid` to pass in specific details to render, say the user leaves the containing page and comes back - you might store where they left off and return them to the exact spot.
 
 However, these aren't required, and I handle that using `defaultProps` on the component class.
-```js
+
+xs```jsx
 DataGrid.defaultProps = {
   displayCount: 10,
   page: 1,

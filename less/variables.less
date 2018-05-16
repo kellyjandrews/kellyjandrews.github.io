@@ -38,6 +38,9 @@ p {
 p, .highlight {margin-bottom:15px;}
 
 
+.padded {
+  padding: ~"@{margins}rem";
+}
 .font-size(@size) {
   font-size: @size/16rem;
 }
@@ -50,6 +53,18 @@ p, .highlight {margin-bottom:15px;}
   margin: 2px;
   border-radius: .35rem;
   display: inline-block;
+}
+
+p > code, li > code {
+  font-size: 130%;
+  color: #c7254e;
+  background: #f9f2f4;
+  padding: 2px 4px;
+  border-radius: 4/16rem;
+}
+
+ol li, ul li  {
+ list-style-position:inside
 }
 
 .overlay {

@@ -26,7 +26,7 @@ In this case, I initially wanted the lower level component to do very little fun
 ## State Of The State
 Currently the `state` for the `DataGrid` component looks like this:
 
-```js
+```jsx
 /* app.jsx */
 
 this.state = {
@@ -44,7 +44,7 @@ After giving these a hard look, several of these are just computed values - `cou
 
 If we dig a bit deeper, though, even `data` is computed. The `prop` data is immutable - so it never changes. The `state` data is our paginated data set. It's just a sliced array. If we remove the computed items, our state now looks like this:
 
-```js
+```jsx
 /* app.jsx */
 
 this.state = {
@@ -63,7 +63,7 @@ Since we basically killed our entire `state`, we need a place to get it.  Rememb
 
 Enter `class PagedData`. A static class in the `pagination.jsx` file that performs all of the computations needed (save a couple) to populate the `Pagination` component, and we expose it in a  `static` method. We can then pass in our data set, page and displayCount `state` and let the `Pagination` component take care of itself a bit more. It will also make the component reusable, without rewriting all of the functions somewhere else.
 
-```js
+```jsx
 /* pagination.jsx */
 class PagedData {
   constructor(d, o) {
@@ -104,7 +104,7 @@ class PagedData {
 
 I split up the result to help the owner do it's job, allowing it to pass `paginatedProps` and `paginatedData` to the proper place. Our new class gets created by calling the following method with `Pagination.pageData()` and pass in the `data` array and our `state` object.
 
-```js
+```jsx
 /* app.jsx */
 render() {
   var paginated = Pagination.pageData(this.props.data, this.state);
@@ -121,7 +121,7 @@ static pageData(d, o) {
 
 I had to do some clean up for the values in `Pagination`, but that was fairly simple, and is in the new code set. One other item that needed cleaning up, is correcting the current page when the `displayCountOptions` change.  That gets moved to a component lifecycle method.
 
-```js
+```jsx
 componentWillUpdate(nextProps) {
   if (this.props.paginatedProps.total !== nextProps.paginatedProps.total) {
     this.props.onChange({'page' : 1});
@@ -149,7 +149,7 @@ Now to call our component, we simply need this -
 ###Handling the Change Events
 In preparing for search, I originally modified the "handlePagination()" method, to simplify the interaction. Then I realized, the method wasn't even required, and could be bypassed altogether.
 
-```js
+```jsx
 /* app.jsx */
 //before
 handlePagination(setting) {
